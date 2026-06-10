@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -155,27 +155,80 @@
   .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
 
   footer { text-align: center; font-size: 12px; color: var(--c-text-sub); margin-top: 60px; border-top: 1px solid var(--c-border); padding-top: 20px; }
+
+  /* ---- Stacking + background creatures ---- */
+  body { position: relative; }
+  .bg-creatures { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .bg-creatures .crt { position: absolute; width: 64px; height: 64px; opacity: .15; }
+  .page-wrap { position: relative; z-index: 1; }
+
+  /* ---- Monster row ---- */
+  .monster-row { display: flex; justify-content: center; align-items: flex-end; gap: 10px;
+                 flex-wrap: wrap; margin: 0 0 26px; }
+  .monster-row svg { width: 50px; height: 50px; }
+  @media (max-width: 700px) { .monster-row { gap: 6px; } .monster-row svg { width: 38px; height: 38px; } }
+
+  /* ---- Hero header image ---- */
+  .hero { width: 100%; margin: 0 0 28px; border-radius: 10px; overflow: hidden;
+          box-shadow: 0 6px 24px rgba(9,30,66,.18); background: #0b1026; }
+  .hero img { display: block; width: 100%; height: auto; }
+
+  /* ---- Evolution figure ---- */
+  .evo-figure { margin: 4px 0 20px; border: 1px solid var(--c-border); border-radius: 10px;
+                overflow: hidden; background: #14182b; }
+  .evo-figure img { display: block; width: 100%; height: auto; }
+  .evo-figure figcaption { font-size: 12px; color: var(--c-text-sub); background: var(--c-surface);
+                           padding: 10px 14px; border-top: 1px solid var(--c-border); }
+  .evo-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .evo-flow .evo-box { background: var(--c-surface); border: 1px solid var(--c-border);
+                       border-radius: 8px; padding: 14px 16px; }
+  .evo-flow .evo-box h4 { margin: 0 0 6px; font-size: 14px; }
+  .evo-flow .evo-box.up   { border-left: 4px solid #36B37E; }
+  .evo-flow .evo-box.down { border-left: 4px solid #FF5630; }
+
+  /* ---- Mobile optimisation ---- */
+  @media (max-width: 700px) {
+    .page-wrap { padding: 16px 14px 56px; }
+    .page-header { flex-direction: column; gap: 8px; }
+    .page-icon { font-size: 38px; }
+    .page-title-group h1 { font-size: 22px; }
+    .lang-select-wrap { position: static; margin-top: 4px; }
+    .toc { width: 100%; min-width: 0; }
+    h2 { font-size: 18px; }
+    .emotion-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .weather-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+    .evo-flow { grid-template-columns: 1fr; gap: 10px; }
+    .formula-box .formula-main { font-size: 13px; width: 100%; }
+    .code-block { font-size: 12px; padding: 12px 14px; }
+    .table-wrap { -webkit-overflow-scrolling: touch; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 10px; }
+    .bg-creatures .crt { width: 46px; height: 46px; opacity: .12; }
+  }
+  @media (max-width: 420px) {
+    .emotion-grid { grid-template-columns: 1fr 1fr; }
+    .page-title-group h1 { font-size: 20px; }
+  }
 </style>
 </head>
 <body>
+<div class="bg-creatures" id="bgCreatures" aria-hidden="true"></div>
 <div class="page-wrap">
 
-  <div class="breadcrumb">
-    Kibo<span>›</span>
-    Docs<span>›</span>
-    <span data-i18n="doc_ref">Design Reference</span>
-  </div>
+  <div class="hero"><img src="kibo-header.png" alt="Kibo" onerror="this.parentNode.style.display='none'"></div>
+
+  <div class="monster-row" id="monsterRow" aria-hidden="true"></div>
 
   <div class="page-header">
-    <div class="page-icon">🐾</div>
     <div class="page-title-group">
       <h1 data-i18n="main_title">Kibo – Design Reference</h1>
+      <div class="page-meta"><span data-i18n="author">Autore:</span> <strong>Team Kibo</strong> · <span class="tag">v1.0</span></div>
     </div>
     
     <div class="lang-select-wrap">
       <select class="lang-select" onchange="translatePage(this.value)">
-          <option value="en">🇺🇸 English</option>
           <option value="it">🇮🇹 Italiano</option>
+          <option value="en">🇺🇸 English</option>
           <option value="es">🇪🇸 Español</option>
           <option value="fr">🇫🇷 Français</option>
           <option value="de">🇩🇪 Deutsch</option>
@@ -190,6 +243,7 @@
     <ol>
       <li><a href="#emozioni" data-i18n="toc_1">Stati / Emozioni del mostro</a></li>
       <li><a href="#evoluzioni" data-i18n="toc_2">Tabella evoluzioni</a></li>
+      <li><a href="#evo-mechanic" data-i18n="toc_2b">Evoluzione & Regressione</a></li>
       <li><a href="#xp" data-i18n="toc_3">Formula XP per evoluzione</a></li>
       <li><a href="#calorie" data-i18n="toc_4">Formula calorie attive</a></li>
       <li><a href="#meteo" data-i18n="toc_5">Animazioni meteo</a></li>
@@ -199,11 +253,11 @@
   <div class="section" id="emozioni">
     <h2 data-i18n="sec1_title">🎭 Stati / Emozioni del mostro</h2>
 
-    <p data-i18n="sec1_desc">Il mostro ha <strong>5 stati emotivi</strong> determinati in tempo reale da Body Battery e livello di stress del Garmin. Lo stress ha priorità: se ≥ 65 il mostro è <em>Stressato</em> indipendentemente dalla Body Battery.</p>
+    <p data-i18n="sec1_desc">Il mostro ha <strong>7 stati</strong> determinati in tempo reale. Gli stati di <strong>allenamento</strong> (rilevati dal movimento) hanno la priorità più alta, poi lo <strong>stress</strong> (≥ 70), infine la <strong>Body Battery</strong>. Di notte, nella finestra di sonno del profilo, il mostro <em>dorme</em>.</p>
 
     <div class="panel panel-info">
       <div class="panel-icon">ℹ️</div>
-      <div data-i18n="sec1_panel">La <strong>priorità di lettura</strong> è: <code>Stress ≥ 65 → Stressato</code>. Altrimenti si usa la Body Battery: ≥70 → Iper, ≥20 → Attivo, ≥10 → Stanco, &lt;10 → Esausto.</div>
+      <div data-i18n="sec1_panel"><strong>Priorità:</strong> Allenamento intenso → <code>mood 6</code>; Allenamento leggero → <code>mood 5</code>; Stress ≥ 70 → <code>mood 4</code>; altrimenti Body Battery: ≥70 → Iper (3), ≥20 → Attivo (2), &lt;20 → Stanco (1). La finestra di sonno forza <code>mood 0</code> (Dorme).</div>
     </div>
 
     <div class="emotion-grid">
@@ -221,9 +275,9 @@
           <circle cx="30" cy="54" r="5" fill="#FF9E6E" opacity=".5"/>
           <circle cx="70" cy="54" r="5" fill="#FF9E6E" opacity=".5"/>
         </svg>
-        <h4 data-i18n="mood0_t">😴 Esausto</h4>
-        <p data-i18n="mood0_d">Occhi chiusi, bocca aperta, ZZZ fluttuanti</p>
-        <div class="trigger-label">Body Battery <span class="trigger-val">&lt; 10</span></div>
+        <h4 data-i18n="mood0_t">😴 Dorme</h4>
+        <p data-i18n="mood0_d">Finestra di sonno: occhi chiusi, ZZZ fluttuanti</p>
+        <div class="trigger-label" data-i18n="mood0_trig">Sonno (notte)</div>
         <div style="margin-top:6px"><span class="badge badge-grey">mood = 0</span></div>
       </div>
 
@@ -231,21 +285,16 @@
         <svg width="100" height="100" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="42" fill="#FFCFA8"/>
           <circle cx="50" cy="56" r="28" fill="#FFE8CC"/>
-          <circle cx="35" cy="43" r="9" fill="white"/>
-          <circle cx="65" cy="43" r="9" fill="white"/>
-          <circle cx="35" cy="46" r="6" fill="#22303A"/>
-          <circle cx="65" cy="46" r="6" fill="#22303A"/>
-          <rect x="26" y="34" width="18" height="8" rx="0" fill="#FFCFA8"/>
-          <rect x="56" y="34" width="18" height="8" rx="0" fill="#FFCFA8"/>
-          <circle cx="32" cy="44" r="2" fill="white"/>
-          <circle cx="62" cy="44" r="2" fill="white"/>
-          <line x1="44" y1="60" x2="56" y2="60" stroke="#5A3A2A" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="30" cy="54" r="5" fill="#FF9E6E" opacity=".5"/>
-          <circle cx="70" cy="54" r="5" fill="#FF9E6E" opacity=".5"/>
+          <path d="M28 45 Q35 53 42 45" stroke="#22303A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M58 45 Q65 53 72 45" stroke="#22303A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="50" cy="63" rx="5" ry="6" fill="#6E2B20"/>
+          <ellipse cx="50" cy="64" rx="2.6" ry="3.2" fill="#C0392B"/>
+          <circle cx="30" cy="55" r="5" fill="#FF9E6E" opacity=".5"/>
+          <circle cx="70" cy="55" r="5" fill="#FF9E6E" opacity=".5"/>
         </svg>
         <h4 data-i18n="mood1_t">😪 Stanco</h4>
         <p data-i18n="mood1_d">Occhi socchiusi con palpebra pesante, bocca neutra</p>
-        <div class="trigger-label">Body Battery <span class="trigger-val">10 – 19</span></div>
+        <div class="trigger-label">Body Battery <span class="trigger-val">&lt; 20</span></div>
         <div style="margin-top:6px"><span class="badge badge-blue">mood = 1</span></div>
       </div>
 
@@ -282,8 +331,11 @@
           <path d="M37 60 Q50 72 63 60" stroke="#C0392B" stroke-width="2.5" fill="#C0392B"/>
           <circle cx="26" cy="55" r="6" fill="#FF9E6E" opacity=".6"/>
           <circle cx="74" cy="55" r="6" fill="#FF9E6E" opacity=".6"/>
-          <path d="M18 28 L20 22 L22 28 L28 30 L22 32 L20 38 L18 32 L12 30 Z" fill="#FFD23F"/>
-          <path d="M74 20 L75.5 16 L77 20 L81 21.5 L77 23 L75.5 27 L74 23 L70 21.5 Z" fill="#FFD23F"/>
+          <path d="M19 18 L21.5 24.5 L28 27 L21.5 29.5 L19 36 L16.5 29.5 L10 27 L16.5 24.5 Z" fill="#FFD23F"/>
+          <circle cx="19" cy="27" r="1.6" fill="#FFF7D6"/>
+          <path d="M79 13 L81 19 L87 21 L81 23 L79 29 L77 23 L71 21 L77 19 Z" fill="#FFD23F"/>
+          <circle cx="79" cy="21" r="1.4" fill="#FFF7D6"/>
+          <path d="M86 38 L87.2 41.4 L90.5 42.5 L87.2 43.6 L86 47 L84.8 43.6 L81.5 42.5 L84.8 41.4 Z" fill="#FFE27A"/>
         </svg>
         <h4 data-i18n="mood3_t">🤩 Iper</h4>
         <p data-i18n="mood3_d">Occhi spalancati, mega sorriso, sparkles brillanti</p>
@@ -306,15 +358,63 @@
           <path d="M42 63 Q50 57 58 63" stroke="#5A3A2A" stroke-width="2" fill="none" stroke-linecap="round"/>
           <circle cx="72" cy="42" r="5" fill="#7CD8FF"/>
           <polygon points="72,34 68,42 76,42" fill="#7CD8FF"/>
-          <line x1="62" y1="22" x2="70" y2="14" stroke="#FF5A5A" stroke-width="2"/>
-          <line x1="70" y1="22" x2="76" y2="15" stroke="#FF5A5A" stroke-width="2"/>
+          <line x1="67" y1="24" x2="75" y2="14" stroke="#FF3B3B" stroke-width="3" stroke-linecap="round"/>
+          <line x1="74" y1="27" x2="82" y2="17" stroke="#FF3B3B" stroke-width="3" stroke-linecap="round"/>
           <circle cx="28" cy="54" r="5" fill="#FF9E6E" opacity=".4"/>
           <circle cx="72" cy="54" r="5" fill="#FF9E6E" opacity=".4"/>
         </svg>
         <h4 data-i18n="mood4_t">😰 Stressato</h4>
         <p data-i18n="mood4_d">Sopracciglia arcuate, bocca giù, goccia di sudore</p>
-        <div class="trigger-label">Stress <span class="trigger-val">≥ 65</span></div>
+        <div class="trigger-label">Stress <span class="trigger-val">≥ 70</span></div>
         <div style="margin-top:6px"><span class="badge badge-red">mood = 4</span></div>
+      </div>
+
+      <div class="emotion-card">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <path d="M12 44 h8 M9 54 h10 M12 64 h8" stroke="#9FB2C8" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>
+          <ellipse cx="42" cy="92" rx="9" ry="5" fill="#FFCFA8"/>
+          <path d="M33 92 a9 5 0 0 0 18 0 z" fill="#C99877"/>
+          <ellipse cx="64" cy="84" rx="9" ry="5" fill="#FFCFA8"/>
+          <circle cx="50" cy="48" r="42" fill="#FFCFA8"/>
+          <circle cx="50" cy="54" r="28" fill="#FFE8CC"/>
+          <circle cx="35" cy="45" r="4.6" fill="#22303A"/>
+          <circle cx="65" cy="45" r="4.6" fill="#22303A"/>
+          <path d="M40 58 Q50 66 60 58" fill="#C0392B"/>
+          <circle cx="29" cy="52" r="5" fill="#FF9E6E" opacity=".55"/>
+          <circle cx="71" cy="52" r="5" fill="#FF9E6E" opacity=".55"/>
+        </svg>
+        <h4 data-i18n="mood5_t">🚶 Allenamento leggero</h4>
+        <p data-i18n="mood5_d">Camminata, yoga, pesi: il mostro cammina (animazione)</p>
+        <div class="trigger-label" data-i18n="mood5_trig">Attività leggera rilevata</div>
+        <div style="margin-top:6px"><span class="badge badge-green">mood = 5</span></div>
+      </div>
+
+      <div class="emotion-card">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <path d="M12 44 h8 M9 54 h10 M12 64 h8" stroke="#9FB2C8" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>
+          <ellipse cx="42" cy="92" rx="9" ry="5" fill="#FFCFA8"/>
+          <path d="M33 92 a9 5 0 0 0 18 0 z" fill="#C99877"/>
+          <ellipse cx="64" cy="84" rx="9" ry="5" fill="#FFCFA8"/>
+          <circle cx="50" cy="48" r="42" fill="#FFCFA8"/>
+          <circle cx="50" cy="54" r="28" fill="#FFE8CC"/>
+          <rect x="11" y="28" width="70" height="12" rx="3" fill="#FF5630"/>
+          <rect x="11" y="31" width="70" height="3" fill="#FF8566" opacity=".7"/>
+          <path d="M81 34 L70 29 L70 39 Z" fill="#FF5630"/>
+          <path d="M81 34 L93 28 L93 40 Z" fill="#FF5630"/>
+          <path d="M79 37 L75 47 M83 37 L88 46" stroke="#FF5630" stroke-width="3.2" stroke-linecap="round"/>
+          <circle cx="81" cy="34" r="4" fill="#E0431B"/>
+          <circle cx="35" cy="47" r="4.6" fill="#22303A"/>
+          <circle cx="65" cy="47" r="4.6" fill="#22303A"/>
+          <path d="M40 59 Q50 67 60 59" fill="#C0392B"/>
+          <circle cx="29" cy="54" r="5" fill="#FF9E6E" opacity=".55"/>
+          <circle cx="71" cy="54" r="5" fill="#FF9E6E" opacity=".55"/>
+          <circle cx="74" cy="50" r="4" fill="#7CD8FF"/>
+          <polygon points="74,43 71,50 77,50" fill="#7CD8FF"/>
+        </svg>
+        <h4 data-i18n="mood6_t">🏃 Allenamento intenso</h4>
+        <p data-i18n="mood6_d">Corsa, bici, palestra: compare la fascia sportiva</p>
+        <div class="trigger-label" data-i18n="mood6_trig">Attività intensa rilevata</div>
+        <div style="margin-top:6px"><span class="badge badge-orange">mood = 6</span></div>
       </div>
 
     </div><h3 data-i18n="tbl1_title">Tabella riassuntiva stati</h3>
@@ -333,8 +433,8 @@
         <tbody>
           <tr>
             <td><span class="badge badge-grey">0</span></td>
-            <td><strong data-i18n="tbl1_m0_n">Esausto</strong> 😴</td>
-            <td>Body Battery &lt; 10</td>
+            <td><strong data-i18n="tbl1_m0_n">Dorme</strong> 😴</td>
+            <td>Finestra di sonno (notte)</td>
             <td data-i18n="tbl1_m0_e">Archi chiusi, palpebra abbassata</td>
             <td data-i18n="tbl1_m0_m">Yawn aperto (cerchio scuro + interno rosso)</td>
             <td data-i18n="tbl1_m0_ex">ZZZ bianchi fluttuanti</td>
@@ -342,7 +442,7 @@
           <tr>
             <td><span class="badge badge-blue">1</span></td>
             <td><strong data-i18n="tbl1_m1_n">Stanco</strong> 😪</td>
-            <td>Body Battery 10–19</td>
+            <td>Body Battery &lt; 20</td>
             <td data-i18n="tbl1_m1_e">Aperti, iride bassa + palpebra a metà</td>
             <td data-i18n="tbl1_m1_m">Linea retta (neutrale)</td>
             <td>—</td>
@@ -366,10 +466,26 @@
           <tr>
             <td><span class="badge badge-red">4</span></td>
             <td><strong data-i18n="tbl1_m4_n">Stressato</strong> 😰</td>
-            <td>Stress ≥ 65 <em>(priorità)</em></td>
+            <td>Stress ≥ 70 <em>(priorità)</em></td>
             <td data-i18n="tbl1_m4_e">Aperti, sopracciglia inclinate (\ /)</td>
             <td data-i18n="tbl1_m4_m">Arco rovesciato (frown)</td>
             <td data-i18n="tbl1_m4_ex">Goccia sudore animata + segni tensione rossi</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">5</span></td>
+            <td><strong>Allenamento leggero</strong> 🚶</td>
+            <td>Attività leggera rilevata <em>(priorità)</em></td>
+            <td>Aperti, vivaci</td>
+            <td>Sorriso</td>
+            <td>Animazione di camminata</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-orange">6</span></td>
+            <td><strong>Allenamento intenso</strong> 🏃</td>
+            <td>Attività intensa rilevata <em>(priorità max)</em></td>
+            <td>Aperti, vivaci</td>
+            <td>Sorriso</td>
+            <td>Fascia sportiva sulla fronte</td>
           </tr>
         </tbody>
       </table>
@@ -482,27 +598,54 @@
         <tbody>
           <tr>
             <td><span class="badge badge-grey" data-i18n="st_b">0 – Base</span></td>
-            <td>85%</td>
+            <td>75%</td>
             <td>Base palette</td>
             <td>Light palette</td>
             <td data-i18n="st_b_n">Nessuno</td>
           </tr>
           <tr>
             <td><span class="badge badge-blue" data-i18n="st_i">1 – Intermedio</span></td>
-            <td>85%</td>
+            <td>80%</td>
             <td>Shade palette</td>
             <td>Light palette</td>
             <td data-i18n="st_i_n">2 puntini accent sui fianchi</td>
           </tr>
           <tr>
             <td><span class="badge badge-purple" data-i18n="st_f">2 – Finale</span></td>
-            <td>97%</td>
+            <td>90%</td>
             <td>Shade palette</td>
-            <td>Base palette</td>
+            <td>Light palette</td>
             <td data-i18n="st_f_n">2 puntini fianchi + 3 puntini ventre</td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="section" id="evo-mechanic">
+    <h2 data-i18n="evo_title">🔄 Evoluzione & Regressione</h2>
+
+    <p data-i18n="evo_desc">Kibo cresce con il tuo allenamento e regredisce con l'inattività. Ogni giornata di movimento aggiunge XP; le giornate pigre o i giorni saltati sottraggono XP, fino a riportare il mostro a uno stadio precedente. Il ciclo è quindi <strong>reversibile</strong>: non è una semplice progressione, ma uno specchio delle tue abitudini.</p>
+
+    <figure class="evo-figure">
+      <img src="kibo-evolution.png" alt="Evoluzione e regressione di Kibo" onerror="this.parentNode.style.display='none'">
+      <figcaption data-i18n="evo_cap">In alto: l'allenamento costante fa evolvere il mostro (Stadio 0 → 1 → 2). In basso: l'inattività prolungata lo fa regredire allo stadio precedente.</figcaption>
+    </figure>
+
+    <div class="evo-flow">
+      <div class="evo-box up">
+        <h4 data-i18n="evo_up_t">⬆️ Evoluzione</h4>
+        <p data-i18n="evo_up_d">Accumula XP allenandoti: <code>minuti_attivi × 4 + passi ÷ 150</code> (+ bonus VO₂max). Una giornata vale al massimo <strong>220 XP</strong>. Superando <strong>300 XP</strong> passi allo Stadio 1, oltre <strong>1200 XP</strong> allo Stadio 2.</p>
+      </div>
+      <div class="evo-box down">
+        <h4 data-i18n="evo_down_t">⬇️ Regressione</h4>
+        <p data-i18n="evo_down_d">Una giornata pigra (sotto <strong>20 XP</strong>) sottrae <strong>90 XP</strong> e azzera la streak. Anche i giorni in cui il quadrante non viene mostrato decadono di 90 XP/giorno (max 5). Se l'XP scende sotto la soglia, il mostro torna allo stadio precedente. L'XP non va mai sotto zero.</p>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-icon">💡</div>
+      <div data-i18n="evo_panel">L'attività che genera XP è rilevata combinando <strong>cadenza dei passi</strong> e <strong>frequenza cardiaca</strong> (relativa al battito a riposo), confermata da calorie attive in aumento o stress basso. Così anche ciclismo, pesi e yoga contano, mentre lo stress da fermo non viene scambiato per allenamento.</div>
     </div>
   </div>
 
@@ -571,7 +714,7 @@
 
     <div class="panel panel-info">
       <div class="panel-icon">💡</div>
-      <div data-i18n="sec3_panel">Il <strong>Livello (LVL)</strong> mostrato sul quadrante è separato dagli stadi evolutivi: <code>level = 1 + (effectiveXp ÷ 10)</code>. Cresce in modo continuo e non regredisce.</div>
+      <div data-i18n="sec3_panel">Il valore <strong>XP</strong> sul quadrante è l'<code>effectiveXp</code> = XP consolidato + contributo del giorno corrente. Il gauge mostra il progresso verso lo stadio successivo (<code>stageProgress</code>); non esiste un livello separato.</div>
     </div>
   </div>
 
@@ -771,7 +914,7 @@
     </div>
 
     <h3 data-i18n="sec5_sub">Distinzione giorno / notte</h3>
-    <p data-i18n="sec5_sub_d">Per il codice <code>0 (clear)</code> il parametro <code>isDay</code> — calcolato come <code>ora ∈ [7, 19]</code> — seleziona tra il disegno del sole e quello della luna crescente.</p>
+    <p data-i18n="sec5_sub_d">Per il codice <code>0 (clear)</code> il parametro <code>isDay</code> — calcolato come <code>ora ∈ [7, 21]</code> — seleziona tra il disegno del sole e quello della luna crescente.</p>
   </div>
 
   <footer data-i18n="footer">
@@ -785,7 +928,7 @@
     it: {
       doc_ref: "Design Reference", main_title: "Kibo – Design Reference", last_mod: "Ultima modifica:", author: "Autore:",
       toc_title: "Contenuti", toc_1: "Stati / Emozioni del mostro", toc_2: "Tabella evoluzioni", toc_3: "Formula XP per evoluzione", toc_4: "Formula calorie attive", toc_5: "Animazioni meteo",
-      sec1_title: "🎭 Stati / Emozioni del mostro", sec1_desc: "Il mostro ha 5 stati emotivi determinati in tempo reale da Body Battery e livello di stress del Garmin. Lo stress ha priorità: se ≥ 65 il mostro è Stressato indipendentemente dalla Body Battery.", sec1_panel: "La priorità di lettura è: Stress ≥ 65 → Stressato. Altrimenti si usa la Body Battery: ≥70 → Iper, ≥20 → Attivo, ≥10 → Stanco, <10 → Esausto.",
+      sec1_title: "🎭 Stati / Emozioni del mostro", sec1_desc: "Il mostro ha 5 stati emotivi determinati in tempo reale da Body Battery e livello di stress del Garmin. Lo stress ha priorità: se ≥ 70 il mostro è Stressato indipendentemente dalla Body Battery.", sec1_panel: "La priorità di lettura è: Stress ≥ 70 → Stressato. Altrimenti si usa la Body Battery: ≥70 → Iper, ≥20 → Attivo, ≥10 → Stanco, <10 → Esausto.",
       mood0_t: "😴 Esausto", mood0_d: "Occhi chiusi, bocca aperta, ZZZ fluttuanti", mood1_t: "😪 Stanco", mood1_d: "Occhi socchiusi con palpebra pesante, bocca neutra", mood2_t: "😊 Attivo", mood2_d: "Occhi aperti e vivaci, sorriso aperto", mood3_t: "🤩 Iper", mood3_d: "Occhi spalancati, mega sorriso, sparkles brillanti", mood4_t: "😰 Stressato", mood4_d: "Sopracciglia arcuate, bocca giù, goccia di sudore",
       tbl1_title: "Tabella riassuntiva stati", tbl1_th2: "Nome", tbl1_th4: "Occhi", tbl1_th5: "Bocca", tbl1_m0_n: "Esausto", tbl1_m0_e: "Archi chiusi, palpebra abbassata", tbl1_m0_m: "Yawn aperto (cerchio scuro + interno rosso)", tbl1_m0_ex: "ZZZ bianchi fluttuanti", tbl1_m1_n: "Stanco", tbl1_m1_e: "Aperti, iride bassa + palpebra a metà", tbl1_m1_m: "Linea retta (neutrale)", tbl1_m2_n: "Attivo", tbl1_m2_e: "Aperti, iride centrata", tbl1_m2_m: "Mezzaluna sorridente", tbl1_m3_n: "Iper", tbl1_m3_e: "Spalancati, iride grande", tbl1_m3_m: "Mezzaluna grande sorridente", tbl1_m3_ex: "Sparkle dorati ai lati della testa", tbl1_m4_n: "Stressato", tbl1_m4_e: "Aperti, sopracciglia inclinate (\\ /)", tbl1_m4_m: "Arco rovesciato (frown)", tbl1_m4_ex: "Goccia sudore animata + segni tensione rossi",
       sec1_note: "Quando il dispositivo non ha ancora dati (prima accensione / simulatore) il mostro mostra il mood Attivo (2) di default.",
@@ -807,13 +950,30 @@
       sec5_title: "🌤 Animazioni meteo", sec5_desc: "Le animazioni meteo si attivano solo in modalità high-power (schermo acceso) per non impattare la batteria. Pioggia e neve sono overlay full-screen animati; le altre condizioni sono icone vettoriali statiche accanto al badge della temperatura.",
       w0_g_t: "☀️ Sereno – Giorno", w0_g_d: "Icona sole con raggi", w0_n_t: "🌙 Sereno – Notte", w0_n_d: "Icona luna crescente", w1_t: "☁️ Nuvoloso", w1_d: "Icona nuvola statica", w2_t: "🌧 Pioggia", w2_d: "Full-screen animato — 14 linee diagonali scorrono", w3_t: "❄️ Neve", w3_d: "Full-screen animato — 16 fiocchi oscillano scendendo", w5_t: "🌫 Nebbia / Vento", w5_d: "Icona nuvola con bande orizzontali",
       tbl5_title: "Mappatura condizioni Garmin → codice animazione", tbl5_th1: "Codice", tbl5_th2: "Animazione", tbl5_th3: "Tipo", tbl5_th4: "Condizioni Garmin incluse",
-      tbl5_r1_c2: "☀️ Sole (giorno) / 🌙 Luna (notte)", tbl5_stat: "Icona statica", tbl5_r2_c2: "☁️ Nuvola", tbl5_r3_c2: "🌧 Pioggia full-screen", tbl5_anim: "Animazione full-screen", tbl5_r4_c2: "❄️ Neve full-screen", tbl5_r5_c2: "🌫 Nebbia", sec5_panel: "Le animazioni full-screen usano particelle deterministiche derivate dal frame-counter — zero allocazioni per frame, zero stato per particella. Pioggia: 14 linee diagonali (x−4, y+12) che scorrono in base a phase = frame % 24. Neve: 16 cerchi con oscillazione sinusoidale laterale + caduta verticale.", sec5_sub: "Distinzione giorno / notte", sec5_sub_d: "Per il codice 0 (clear) il parametro isDay — calcolato come ora ∈ [7, 19] — seleziona tra il disegno del sole e quello della luna crescente.",
+      tbl5_r1_c2: "☀️ Sole (giorno) / 🌙 Luna (notte)", tbl5_stat: "Icona statica", tbl5_r2_c2: "☁️ Nuvola", tbl5_r3_c2: "🌧 Pioggia full-screen", tbl5_anim: "Animazione full-screen", tbl5_r4_c2: "❄️ Neve full-screen", tbl5_r5_c2: "🌫 Nebbia", sec5_panel: "Le animazioni full-screen usano particelle deterministiche derivate dal frame-counter — zero allocazioni per frame, zero stato per particella. Pioggia: 14 linee diagonali (x−4, y+12) che scorrono in base a phase = frame % 24. Neve: 16 cerchi con oscillazione sinusoidale laterale + caduta verticale.", sec5_sub: "Distinzione giorno / notte", sec5_sub_d: "Per il codice 0 (clear) il parametro isDay — calcolato come ora ∈ [7, 21] — seleziona tra il disegno del sole e quello della luna crescente.",
+      toc_2b: "Evoluzione & Regressione",
+      sec1_desc: "Il mostro ha 7 stati determinati in tempo reale. Gli stati di allenamento (rilevati dal movimento) hanno la priorità più alta, poi lo stress (≥ 70), infine la Body Battery. Di notte, nella finestra di sonno del profilo, il mostro dorme.",
+      sec1_panel: "Priorità: Allenamento intenso → mood 6; Allenamento leggero → mood 5; Stress ≥ 70 → mood 4; altrimenti Body Battery: ≥70 → Iper (3), ≥20 → Attivo (2), <20 → Stanco (1). La finestra di sonno forza mood 0 (Dorme).",
+      mood0_t: "😴 Dorme", mood0_d: "Finestra di sonno: occhi chiusi, ZZZ fluttuanti", mood0_trig: "Sonno (notte)", tbl1_m0_n: "Dorme",
+      mood5_t: "🚶 Allenamento leggero", mood5_d: "Camminata, yoga, pesi: il mostro cammina (animazione)", mood5_trig: "Attività leggera rilevata",
+      mood6_t: "🏃 Allenamento intenso", mood6_d: "Corsa, bici, palestra: piedi in movimento + fascia sportiva + goccia di sudore", mood6_trig: "Attività intensa rilevata",
+      st_f_n: "2 puntini fianchi + 3 puntini ventre (eccetto Volt)",
+      sec3_panel: "Il valore XP sul quadrante è l'effectiveXp = XP consolidato + contributo del giorno corrente. Il gauge mostra il progresso verso lo stadio successivo (stageProgress); non esiste un livello separato.",
+      evo_title: "🔄 Evoluzione & Regressione",
+      evo_desc: "Kibo cresce con il tuo allenamento e regredisce con l'inattività. Ogni giornata di movimento aggiunge XP; le giornate pigre o i giorni saltati sottraggono XP, fino a riportare il mostro a uno stadio precedente. Il ciclo è reversibile: uno specchio delle tue abitudini.",
+      evo_cap: "In alto: l'allenamento costante fa evolvere il mostro (Stadio 0 → 1 → 2). In basso: l'inattività prolungata lo fa regredire allo stadio precedente.",
+      evo_up_t: "⬆️ Evoluzione", evo_up_d: "Accumula XP allenandoti: minuti_attivi × 4 + passi ÷ 150 (+ bonus VO₂max). Una giornata vale al massimo 220 XP. Oltre 300 XP → Stadio 1, oltre 1200 XP → Stadio 2.",
+      evo_down_t: "⬇️ Regressione", evo_down_d: "Una giornata pigra (sotto 20 XP) sottrae 90 XP e azzera la streak. Anche i giorni senza quadrante mostrato decadono di 90 XP/giorno (max 5). Sotto la soglia, il mostro regredisce. L'XP non va mai sotto zero.",
+      evo_panel: "L'attività che genera XP è rilevata combinando cadenza dei passi e frequenza cardiaca (relativa al battito a riposo), confermata da calorie attive in aumento o stress basso. Così ciclismo, pesi e yoga contano, mentre lo stress da fermo non viene scambiato per allenamento.",
+      mood1_d: "Occhi chiusi (curva dolce verso il basso) + piccolo sbadiglio",
+      tbl1_m1_e: "Chiusi, arco dolce verso il basso", tbl1_m1_m: "Piccolo sbadiglio",
+      mood5_d: "Muove i piedi camminando — alterna il passo (camminata, yoga, pesi)",
       footer: "Kibo · Connect IQ Watch Face · Design Reference · Giugno 2025"
     },
     en: {
       doc_ref: "Design Reference", main_title: "Kibo – Design Reference", last_mod: "Last modified:", author: "Author:",
       toc_title: "Contents", toc_1: "Monster States / Emotions", toc_2: "Evolution Table", toc_3: "XP Formula per Evolution", toc_4: "Active Calories Formula", toc_5: "Weather Animations",
-      sec1_title: "🎭 Monster States / Emotions", sec1_desc: "The monster has 5 emotional states determined in real-time by Garmin's Body Battery and Stress level. Stress takes priority: if ≥ 65, the monster is Stressed regardless of the Body Battery.", sec1_panel: "Reading priority is: Stress ≥ 65 → Stressed. Otherwise, Body Battery is checked: ≥70 → Hyper, ≥20 → Active, ≥10 → Tired, <10 → Exhausted.",
+      sec1_title: "🎭 Monster States / Emotions", sec1_desc: "The monster has 5 emotional states determined in real-time by Garmin's Body Battery and Stress level. Stress takes priority: if ≥ 70, the monster is Stressed regardless of the Body Battery.", sec1_panel: "Reading priority is: Stress ≥ 70 → Stressed. Otherwise, Body Battery is checked: ≥70 → Hyper, ≥20 → Active, ≥10 → Tired, <10 → Exhausted.",
       mood0_t: "😴 Exhausted", mood0_d: "Closed eyes, open mouth, floating ZZZs", mood1_t: "😪 Tired", mood1_d: "Half-closed eyes with heavy eyelids, neutral mouth", mood2_t: "😊 Active", mood2_d: "Open and bright eyes, open smile", mood3_t: "🤩 Hyper", mood3_d: "Wide open eyes, mega smile, shining sparkles", mood4_t: "😰 Stressed", mood4_d: "Arched eyebrows, mouth down, sweat drop",
       tbl1_title: "States Summary Table", tbl1_th2: "Name", tbl1_th4: "Eyes", tbl1_th5: "Mouth", tbl1_m0_n: "Exhausted", tbl1_m0_e: "Closed arches, lowered eyelid", tbl1_m0_m: "Open yawn (dark circle + red interior)", tbl1_m0_ex: "Floating white ZZZs", tbl1_m1_n: "Tired", tbl1_m1_e: "Open, low iris + half-lid", tbl1_m1_m: "Straight line (neutral)", tbl1_m2_n: "Active", tbl1_m2_e: "Open, centered iris", tbl1_m2_m: "Smiling crescent", tbl1_m3_n: "Hyper", tbl1_m3_e: "Wide open, large iris", tbl1_m3_m: "Large smiling crescent", tbl1_m3_ex: "Golden sparkles on the sides of the head", tbl1_m4_n: "Stressed", tbl1_m4_e: "Open, slanted eyebrows (\\ /)", tbl1_m4_m: "Inverted arch (frown)", tbl1_m4_ex: "Animated sweat drop + red tension marks",
       sec1_note: "When the device has no data yet (first boot / simulator), the monster shows the Active (2) mood by default.",
@@ -835,13 +995,30 @@
       sec5_title: "🌤 Weather Animations", sec5_desc: "Weather animations only activate in high-power mode (screen on) to save battery. Rain and snow are full-screen animated overlays; other conditions are static vector icons next to the temperature badge.",
       w0_g_t: "☀️ Clear – Day", w0_g_d: "Sun icon with rays", w0_n_t: "🌙 Clear – Night", w0_n_d: "Crescent moon icon", w1_t: "☁️ Cloudy", w1_d: "Static cloud icon", w2_t: "🌧 Rain", w2_d: "Full-screen animated — 14 diagonal lines scrolling", w3_t: "❄️ Snow", w3_d: "Full-screen animated — 16 flakes oscillating downwards", w5_t: "🌫 Fog / Wind", w5_d: "Cloud icon with horizontal bands",
       tbl5_title: "Garmin Conditions to Animation Code Mapping", tbl5_th1: "Code", tbl5_th2: "Animation", tbl5_th3: "Type", tbl5_th4: "Included Garmin Conditions",
-      tbl5_r1_c2: "☀️ Sun (day) / 🌙 Moon (night)", tbl5_stat: "Static icon", tbl5_r2_c2: "☁️ Cloud", tbl5_r3_c2: "🌧 Full-screen rain", tbl5_anim: "Full-screen animation", tbl5_r4_c2: "❄️ Full-screen snow", tbl5_r5_c2: "🌫 Fog", sec5_panel: "Full-screen animations use deterministic particles derived from the frame-counter — zero allocations per frame, zero state per particle. Rain: 14 diagonal lines (x−4, y+12) scrolling based on phase = frame % 24. Snow: 16 circles with lateral sinusoidal oscillation + vertical fall.", sec5_sub: "Day / Night Distinction", sec5_sub_d: "For code 0 (clear), the isDay parameter — calculated as hour ∈ [7, 19] — selects between the sun drawing and the crescent moon drawing.",
+      tbl5_r1_c2: "☀️ Sun (day) / 🌙 Moon (night)", tbl5_stat: "Static icon", tbl5_r2_c2: "☁️ Cloud", tbl5_r3_c2: "🌧 Full-screen rain", tbl5_anim: "Full-screen animation", tbl5_r4_c2: "❄️ Full-screen snow", tbl5_r5_c2: "🌫 Fog", sec5_panel: "Full-screen animations use deterministic particles derived from the frame-counter — zero allocations per frame, zero state per particle. Rain: 14 diagonal lines (x−4, y+12) scrolling based on phase = frame % 24. Snow: 16 circles with lateral sinusoidal oscillation + vertical fall.", sec5_sub: "Day / Night Distinction", sec5_sub_d: "For code 0 (clear), the isDay parameter — calculated as hour ∈ [7, 21] — selects between the sun drawing and the crescent moon drawing.",
+      toc_2b: "Evolution & Devolution",
+      sec1_desc: "The monster has 7 states determined in real time. Training states (detected from movement) have the highest priority, then stress (≥ 70), then Body Battery. At night, during the profile's sleep window, the monster sleeps.",
+      sec1_panel: "Priority: Intense training → mood 6; Light training → mood 5; Stress ≥ 70 → mood 4; otherwise Body Battery: ≥70 → Hyper (3), ≥20 → Active (2), <20 → Tired (1). The sleep window forces mood 0 (Sleeping).",
+      mood0_t: "😴 Sleeping", mood0_d: "Sleep window: closed eyes, floating ZZZs", mood0_trig: "Sleep (night)", tbl1_m0_n: "Sleeping",
+      mood5_t: "🚶 Light training", mood5_d: "Walking, yoga, weights: the monster walks (animation)", mood5_trig: "Light activity detected",
+      mood6_t: "🏃 Intense training", mood6_d: "Running, cycling, gym: moving feet + sport headband + sweat drop", mood6_trig: "Intense activity detected",
+      st_f_n: "2 hip dots + 3 belly dots (except Volt)",
+      sec3_panel: "The XP value on the dial is effectiveXp = committed XP + today's live contribution. The gauge shows progress toward the next stage (stageProgress); there is no separate level.",
+      evo_title: "🔄 Evolution & Devolution",
+      evo_desc: "Kibo grows with your training and devolves with inactivity. Each active day adds XP; lazy or skipped days subtract XP, eventually dropping the monster to a previous stage. The cycle is reversible: a mirror of your habits.",
+      evo_cap: "Top: consistent training evolves the monster (Stage 0 → 1 → 2). Bottom: prolonged inactivity devolves it to the previous stage.",
+      evo_up_t: "⬆️ Evolution", evo_up_d: "Earn XP by training: active_minutes × 4 + steps ÷ 150 (+ VO₂max bonus). A day is worth at most 220 XP. Above 300 XP → Stage 1, above 1200 XP → Stage 2.",
+      evo_down_t: "⬇️ Devolution", evo_down_d: "A lazy day (below 20 XP) subtracts 90 XP and resets the streak. Skipped days (face not shown) also decay 90 XP/day (max 5). Below the threshold the monster devolves. XP never goes below zero.",
+      evo_panel: "XP-generating activity is detected by combining step cadence and heart rate (relative to resting), confirmed by rising active calories or low stress. So cycling, weights and yoga count, while stress while still is not mistaken for training.",
+      mood1_d: "Closed eyes (soft downward curve) + small yawn",
+      tbl1_m1_e: "Closed, soft downward arc", tbl1_m1_m: "Small yawn",
+      mood5_d: "Steps its feet while walking — alternating stride (walking, yoga, weights)",
       footer: "Kibo · Connect IQ Watch Face · Design Reference · June 2025"
     },
     es: {
       doc_ref: "Referencia de Diseño", main_title: "Kibo – Referencia de Diseño", last_mod: "Última modificación:", author: "Autor:",
       toc_title: "Contenidos", toc_1: "Estados / Emociones del monstruo", toc_2: "Tabla de evoluciones", toc_3: "Fórmula de XP para evolución", toc_4: "Fórmula de calorías activ", toc_5: "Animaciones meteorológicas",
-      sec1_title: "🎭 Estados / Emociones del monstruo", sec1_desc: "El monstruo tiene 5 estados emocionales determinados en tiempo real por la Body Battery y el nivel de estrés de Garmin. El estrés tiene prioridad: si es ≥ 65, el monstruo está Estresado independientemente de la Body Battery.", sec1_panel: "La prioridad de lectura es: Estrés ≥ 65 → Estresado. De lo contrario, se usa la Body Battery: ≥70 → Hiper, ≥20 → Activo, ≥10 → Cansado, <10 → Agotado.",
+      sec1_title: "🎭 Estados / Emociones del monstruo", sec1_desc: "El monstruo tiene 7 estados emocionales determinados en tiempo real por la Body Battery y el nivel de estrés de Garmin. El estrés tiene prioridad: si es ≥ 70, el monstruo está Estresado independientemente de la Body Battery.", sec1_panel: "La prioridad de lectura es: Estrés ≥ 70 → Estresado. De lo contrario, se usa la Body Battery: ≥70 → Hiper, ≥20 → Activo, ≥10 → Cansado, <10 → Agotado.",
       mood0_t: "😴 Agotado", mood0_d: "Ojos cerrados, boca abierta, ZZZ flotantes", mood1_t: "😪 Cansado", mood1_d: "Ojos entreabiertos con párpados pesados, boca neutra", mood2_t: "😊 Activo", mood2_d: "Ojos abiertos y vivos, sonrisa abierta", mood3_t: "🤩 Hiper", mood3_d: "Ojos abiertos de par en par, mega sonrisa, destellos brillantes", mood4_t: "😰 Estresado", mood4_d: "Cejas arqueadas, boca abajo, gota de sudor",
       tbl1_title: "Tabla resumen de estados", tbl1_th2: "Nombre", tbl1_th4: "Ojos", tbl1_th5: "Boca", tbl1_m0_n: "Agotado", tbl1_m0_e: "Arcos cerrados, párpado bajado", tbl1_m0_m: "Bostezo abierto (círculo oscuro + interior rojo)", tbl1_m0_ex: "ZZZ blancas flotantes", tbl1_m1_n: "Cansado", tbl1_m1_e: "Abiertos, iris bajo + medio párpado", tbl1_m1_m: "Línea recta (neutral)", tbl1_m2_n: "Activo", tbl1_m2_e: "Abiertos, iris centrado", tbl1_m2_m: "Media luna sonriente", tbl1_m3_n: "Hiper", tbl1_m3_e: "Abiertos de par en par, iris grande", tbl1_m3_m: "Media luna grande sonriente", tbl1_m3_ex: "Destellos dorados a los lados de la cabeza", tbl1_m4_n: "Estresado", tbl1_m4_e: "Abiertos, cejas inclinadas (\\ /)", tbl1_m4_m: "Arco invertido (frown)", tbl1_m4_ex: "Gota de sudor animada + marcas de tensión rojas",
       sec1_note: "Cuando el dispositivo aún no tiene datos (primer encendido / simulador), el monstruo muestra el estado Activo (2) por defecto.",
@@ -863,13 +1040,27 @@
       sec5_title: "🌤 Animaciones meteorológicas", sec5_desc: "Las animaciones meteorológicas solo se activan en modo de alta potencia (pantalla encendida) para no afectar la batería. La lluvia y la nieve son superposiciones animadas a pantalla completa; las demás condiciones son iconos vectoriales estáticos junto a la insignia de temperatura.",
       w0_g_t: "☀️ Despejado – Día", w0_g_d: "Icono de sol con rayos", w0_n_t: "🌙 Despejado – Noche", w0_n_d: "Icono de luna creciente", w1_t: "☁️ Nublado", w1_d: "Icono de nube estático", w2_t: "🌧 Lluvia", w2_d: "Pantalla completa animada — 14 líneas diagonales fluyen", w3_t: "❄️ Nieve", w3_d: "Pantalla completa animada — 16 copos oscilan bajando", w5_t: "🌫 Niebla / Vento", w5_d: "Icono de nube con bandas horizontales",
       tbl5_title: "Mapeo de condiciones Garmin → código de animación", tbl5_th1: "Código", tbl5_th2: "Animación", tbl5_th3: "Tipo", tbl5_th4: "Condiciones Garmin incluidas",
-      tbl5_r1_c2: "☀️ Sol (día) / 🌙 Luna (noche)", tbl5_stat: "Icono estático", tbl5_r2_c2: "☁️ Nube", tbl5_r3_c2: "🌧 Lluvia a pantalla completa", tbl5_anim: "Animación a pantalla completa", tbl5_r4_c2: "❄️ Nieve a pantalla completa", tbl5_r5_c2: "🌫 Niebla", sec5_panel: "Las animaciones a pantalla completa usan partículas deterministas derivadas del contador de fotogramas — cero asignaciones por fotograma, cero estado por partícula. Lluvia: 14 líneas diagonales (x−4, y+12) que fluyen según phase = frame % 24. Nieve: 16 círculos con oscilación sinusoidal lateral + caída vertical.", sec5_sub: "Distinción día / noche", sec5_sub_d: "Para el código 0 (clear), el parámetro isDay — calculado como hora ∈ [7, 19] — selecciona entre el dibujo del sol y el de la luna creciente.",
+      tbl5_r1_c2: "☀️ Sol (día) / 🌙 Luna (noche)", tbl5_stat: "Icono estático", tbl5_r2_c2: "☁️ Nube", tbl5_r3_c2: "🌧 Lluvia a pantalla completa", tbl5_anim: "Animación a pantalla completa", tbl5_r4_c2: "❄️ Nieve a pantalla completa", tbl5_r5_c2: "🌫 Niebla", sec5_panel: "Las animaciones a pantalla completa usan partículas deterministas derivadas del contador de fotogramas — cero asignaciones por fotograma, cero estado por partícula. Lluvia: 14 líneas diagonales (x−4, y+12) que fluyen según phase = frame % 24. Nieve: 16 círculos con oscilación sinusoidal lateral + caída vertical.", sec5_sub: "Distinción día / noche", sec5_sub_d: "Para el código 0 (clear), el parámetro isDay — calculado como hora ∈ [7, 21] — selecciona entre el dibujo del sol y el de la luna creciente.",
+      toc_2b: "Evolution & Devolution",
+      sec1_desc: "The monster has 7 states determined in real time. Training states (detected from movement) have the highest priority, then stress (≥ 70), then Body Battery. At night, during the profile's sleep window, the monster sleeps.",
+      sec1_panel: "Priority: Intense training → mood 6; Light training → mood 5; Stress ≥ 70 → mood 4; otherwise Body Battery: ≥70 → Hyper (3), ≥20 → Active (2), <20 → Tired (1). The sleep window forces mood 0 (Sleeping).",
+      mood0_t: "😴 Sleeping", mood0_d: "Sleep window: closed eyes, floating ZZZs", mood0_trig: "Sleep (night)", tbl1_m0_n: "Sleeping",
+      mood5_t: "🚶 Light training", mood5_d: "Walking, yoga, weights: the monster walks (animation)", mood5_trig: "Light activity detected",
+      mood6_t: "🏃 Intense training", mood6_d: "Running, cycling, gym: moving feet + sport headband + sweat drop", mood6_trig: "Intense activity detected",
+      st_f_n: "2 hip dots + 3 belly dots (except Volt)",
+      sec3_panel: "The XP value on the dial is effectiveXp = committed XP + today's live contribution. The gauge shows progress toward the next stage (stageProgress); there is no separate level.",
+      evo_title: "🔄 Evolution & Devolution",
+      evo_desc: "Kibo grows with your training and devolves with inactivity. Each active day adds XP; lazy or skipped days subtract XP, eventually dropping the monster to a previous stage. The cycle is reversible: a mirror of your habits.",
+      evo_cap: "Top: consistent training evolves the monster (Stage 0 → 1 → 2). Bottom: prolonged inactivity devolves it to the previous stage.",
+      evo_up_t: "⬆️ Evolution", evo_up_d: "Earn XP by training: active_minutes × 4 + steps ÷ 150 (+ VO₂max bonus). A day is worth at most 220 XP. Above 300 XP → Stage 1, above 1200 XP → Stage 2.",
+      evo_down_t: "⬇️ Devolution", evo_down_d: "A lazy day (below 20 XP) subtracts 90 XP and resets the streak. Skipped days (face not shown) also decay 90 XP/day (max 5). Below the threshold the monster devolves. XP never goes below zero.",
+      evo_panel: "XP-generating activity is detected by combining step cadence and heart rate (relative to resting), confirmed by rising active calories or low stress. So cycling, weights and yoga count, while stress while still is not mistaken for training.",
       footer: "Kibo · Connect IQ Watch Face · Referencia de Diseño · Junio 2025"
     },
     fr: {
       doc_ref: "Référence de Design", main_title: "Kibo – Référence de Design", last_mod: "Dernière modification :", author: "Auteur :",
       toc_title: "Contenu", toc_1: "États / Émotions du monstre", toc_2: "Tableau des évolutions", toc_3: "Formule XP pour évolution", toc_4: "Formule des calories actives", toc_5: "Animations météo",
-      sec1_title: "🎭 États / Émotions du monstre", sec1_desc: "Le monstre a 5 états émotionnels déterminés en temps réel par la Body Battery et le niveau de stress Garmin. Le stress a la priorité : si ≥ 65, le monstre est Stressé indépendamment de la Body Battery.", sec1_panel: "La priorité de lecture est : Stress ≥ 65 → Stressé. Sinon, la Body Battery est utilisée : ≥70 → Hyper, ≥20 → Actif, ≥10 → Fatigué, <10 → Épuisé.",
+      sec1_title: "🎭 États / Émotions du monstre", sec1_desc: "Le monstre a 7 états émotionnels déterminés en temps réel par la Body Battery et le niveau de stress Garmin. Le stress a la priorité : si ≥ 70, le monstre est Stressé indépendamment de la Body Battery.", sec1_panel: "La priorité de lecture est : Stress ≥ 70 → Stressé. Sinon, la Body Battery est utilisée : ≥70 → Hyper, ≥20 → Actif, ≥10 → Fatigué, <10 → Épuisé.",
       mood0_t: "😴 Épuisé", mood0_d: "Yeux fermés, bouche ouverte, ZZZ flottants", mood1_t: "😪 Fatigué", mood1_d: "Yeux mi-clos avec paupières lourdes, bouche neutre", mood2_t: "😊 Actif", mood2_d: "Yeux ouverts et vifs, sourire ouvert", mood3_t: "🤩 Hyper", mood3_d: "Yeux grands ouverts, méga sourire, éclats brillants", mood4_t: "😰 Stressé", mood4_d: "Sourcils arqués, bouche vers le bas, goutte de sueur",
       tbl1_title: "Tableau récapitulatif des états", tbl1_th2: "Nom", tbl1_th4: "Yeux", tbl1_th5: "Bouche", tbl1_m0_n: "Épuisé", tbl1_m0_e: "Arcs fermés, paupière baissée", tbl1_m0_m: "Baillement ouvert (cercle sombre + intérieur rouge)", tbl1_m0_ex: "ZZZ blancs flottants", tbl1_m1_n: "Fatigué", tbl1_m1_e: "Ouverts, iris bas + demi-paupière", tbl1_m1_m: "Ligne droite (neutre)", tbl1_m2_n: "Actif", tbl1_m2_e: "Ouverts, iris centré", tbl1_m2_m: "Croissant souriant", tbl1_m3_n: "Hyper", tbl1_m3_e: "Grands ouverts, grand iris", tbl1_m3_m: "Grand croissant souriant", tbl1_m3_ex: "Éclats dorés sur les côtés de la tête", tbl1_m4_n: "Stressé", tbl1_m4_e: "Ouverts, sourcils inclinés (\\ /)", tbl1_m4_m: "Arc inversé (frown)", tbl1_m4_ex: "Goutte de sueur animée + marques de tension rouges",
       sec1_note: "Lorsque l'appareil n'a pas encore de données (premier démarrage / simulateur), le monstre affiche l'état Actif (2) par défaut.",
@@ -891,13 +1082,27 @@
       sec5_title: "🌤 Animations météo", sec5_desc: "Les animations météo ne s'activent qu'en mode haute puissance (écran allumé) pour ne pas affecter la batterie. La pluie et la neige sont des superpositions animées en plein écran ; les autres conditions sont des icônes vectorielles statiques à côté du badge de température.",
       w0_g_t: "☀️ Dégagé – Jour", w0_g_d: "Icône de soleil avec rayons", w0_n_t: "🌙 Dégagé – Nuit", w0_n_d: "Icône de croissant de lune", w1_t: "☁️ Nuageux", w1_d: "Icône de nuage statique", w2_t: "🌧 Pluie", w2_d: "Plein écran animé — 14 lignes diagonales défilent", w3_t: "❄️ Neige", w3_d: "Plein écran animé — 16 flocons oscillent en descendant", w5_t: "🌫 Brouillard / Vent", w5_d: "Icône de nuage avec bandes horizontales",
       tbl5_title: "Mappage des conditions Garmin → code d'animation", tbl5_th1: "Code", tbl5_th2: "Animation", tbl5_th3: "Type", tbl5_th4: "Conditions Garmin incluses",
-      tbl5_r1_c2: "☀️ Soleil (jour) / 🌙 Lune (nuit)", tbl5_stat: "Icône statique", tbl5_r2_c2: "☁️ Nuage", tbl5_r3_c2: "🌧 Pluie plein écran", tbl5_anim: "Animation plein écran", tbl5_r4_c2: "❄️ Neige plein écran", tbl5_r5_c2: "🌫 Brouillard", sec5_panel: "Les animations en plein écran utilisent des particules déterministes dérivées du compteur de cadres — zéro allocation par cadre, zéro état par particule. Pluie : 14 lignes diagonales (x−4, y+12) défilant selon phase = frame % 24. Neige : 16 cercles avec oscillation sinusoïdale latérale + chute verticale.", sec5_sub: "Distinction jour / nuit", sec5_sub_d: "Pour le code 0 (clear), le paramètre isDay — calculé comme heure ∈ [7, 19] — sélectionne entre le dessin du soleil et celui du croissant de lune.",
+      tbl5_r1_c2: "☀️ Soleil (jour) / 🌙 Lune (nuit)", tbl5_stat: "Icône statique", tbl5_r2_c2: "☁️ Nuage", tbl5_r3_c2: "🌧 Pluie plein écran", tbl5_anim: "Animation plein écran", tbl5_r4_c2: "❄️ Neige plein écran", tbl5_r5_c2: "🌫 Brouillard", sec5_panel: "Les animations en plein écran utilisent des particules déterministes dérivées du compteur de cadres — zéro allocation par cadre, zéro état par particule. Pluie : 14 lignes diagonales (x−4, y+12) défilant selon phase = frame % 24. Neige : 16 cercles avec oscillation sinusoïdale latérale + chute verticale.", sec5_sub: "Distinction jour / nuit", sec5_sub_d: "Pour le code 0 (clear), le paramètre isDay — calculé comme heure ∈ [7, 21] — sélectionne entre le dessin du soleil et celui du croissant de lune.",
+      toc_2b: "Evolution & Devolution",
+      sec1_desc: "The monster has 7 states determined in real time. Training states (detected from movement) have the highest priority, then stress (≥ 70), then Body Battery. At night, during the profile's sleep window, the monster sleeps.",
+      sec1_panel: "Priority: Intense training → mood 6; Light training → mood 5; Stress ≥ 70 → mood 4; otherwise Body Battery: ≥70 → Hyper (3), ≥20 → Active (2), <20 → Tired (1). The sleep window forces mood 0 (Sleeping).",
+      mood0_t: "😴 Sleeping", mood0_d: "Sleep window: closed eyes, floating ZZZs", mood0_trig: "Sleep (night)", tbl1_m0_n: "Sleeping",
+      mood5_t: "🚶 Light training", mood5_d: "Walking, yoga, weights: the monster walks (animation)", mood5_trig: "Light activity detected",
+      mood6_t: "🏃 Intense training", mood6_d: "Running, cycling, gym: moving feet + sport headband + sweat drop", mood6_trig: "Intense activity detected",
+      st_f_n: "2 hip dots + 3 belly dots (except Volt)",
+      sec3_panel: "The XP value on the dial is effectiveXp = committed XP + today's live contribution. The gauge shows progress toward the next stage (stageProgress); there is no separate level.",
+      evo_title: "🔄 Evolution & Devolution",
+      evo_desc: "Kibo grows with your training and devolves with inactivity. Each active day adds XP; lazy or skipped days subtract XP, eventually dropping the monster to a previous stage. The cycle is reversible: a mirror of your habits.",
+      evo_cap: "Top: consistent training evolves the monster (Stage 0 → 1 → 2). Bottom: prolonged inactivity devolves it to the previous stage.",
+      evo_up_t: "⬆️ Evolution", evo_up_d: "Earn XP by training: active_minutes × 4 + steps ÷ 150 (+ VO₂max bonus). A day is worth at most 220 XP. Above 300 XP → Stage 1, above 1200 XP → Stage 2.",
+      evo_down_t: "⬇️ Devolution", evo_down_d: "A lazy day (below 20 XP) subtracts 90 XP and resets the streak. Skipped days (face not shown) also decay 90 XP/day (max 5). Below the threshold the monster devolves. XP never goes below zero.",
+      evo_panel: "XP-generating activity is detected by combining step cadence and heart rate (relative to resting), confirmed by rising active calories or low stress. So cycling, weights and yoga count, while stress while still is not mistaken for training.",
       footer: "Kibo · Connect IQ Watch Face · Référence de Design · Juin 2025"
     },
     de: {
       doc_ref: "Design-Referenz", main_title: "Kibo – Design-Referenz", last_mod: "Zuletzt geändert:", author: "Autor:",
       toc_title: "Inhalt", toc_1: "Zustände / Emotionen des Monsters", toc_2: "Evolutionstabelle", toc_3: "XP-Formel für Evolution", toc_4: "Formel für aktive Kalorien", toc_5: "Wetteranimationen",
-      sec1_title: "🎭 Zustände / Emotionen des Monsters", sec1_desc: "Das Monster hat 5 emotionale Zustände, die in Echtzeit durch die Body Battery und das Stresslevel von Garmin bestimmt werden. Stress hat Priorität: Wenn ≥ 65, ist das Monster gestresst, unabhängig von der Body Battery.", sec1_panel: "Die Lesepriorität ist: Stress ≥ 65 → Gestresst. Andernfalls wird die Body Battery verwendet: ≥70 → Hyper, ≥20 → Aktiv, ≥10 → Müde, <10 → Erschöpft.",
+      sec1_title: "🎭 Zustände / Emotionen des Monsters", sec1_desc: "Das Monster hat 7 emotionale Zustände, die in Echtzeit durch die Body Battery und das Stresslevel von Garmin bestimmt werden. Stress hat Priorität: Wenn ≥ 70, ist das Monster gestresst, unabhängig von der Body Battery.", sec1_panel: "Die Lesepriorität ist: Stress ≥ 70 → Gestresst. Andernfalls wird die Body Battery verwendet: ≥70 → Hyper, ≥20 → Aktiv, ≥10 → Müde, <10 → Erschöpft.",
       mood0_t: "😴 Erschöpft", mood0_d: "Geschlossene Augen, offener Mund, schwebende ZZZs", mood1_t: "😪 Müde", mood1_d: "Halbgeschlossene Augen mit schweren Augenlidern, neutraler Mund", mood2_t: "😊 Aktiv", mood2_d: "Offene und lebendige Augen, offenes Lächeln", mood3_t: "🤩 Hyper", mood3_d: "Weit geöffnete Augen, Mega-Lächeln, leuchtende Funken", mood4_t: "😰 Gestresst", mood4_d: "Gezogene Augenbrauen, Mund nach unten, Schweißtropfen",
       tbl1_title: "Zusammenfassungstabelle der Zustände", tbl1_th2: "Name", tbl1_th4: "Augen", tbl1_th5: "Mund", tbl1_m0_n: "Erschöpft", tbl1_m0_e: "Geschlossene Bögen, gesenktes Augenlid", tbl1_m0_m: "Offenes Gähnen (dunkler Kreis + rotes Inneres)", tbl1_m0_ex: "Schwebende weiße ZZZs", tbl1_m1_n: "Müde", tbl1_m1_e: "Offen, niedrige Iris + halbes Augenlid", tbl1_m1_m: "Gerade Linie (neutral)", tbl1_m2_n: "Aktiv", tbl1_m2_e: "Offen, zentrierte Iris", tbl1_m2_m: "Lächelnder Halbmond", tbl1_m3_n: "Hyper", tbl1_m3_e: "Weit geöffnet, große Iris", tbl1_m3_m: "Großer lächelnder Halbmond", tbl1_m3_ex: "Goldene Funken an den Seiten des Kopfes", tbl1_m4_n: "Gestresst", tbl1_m4_e: "Offen, geneigte Augenbrauen (\\ /)", tbl1_m4_m: "Invertierter Bogen (frown)", tbl1_m4_ex: "Animierter Schweißtropfen + rote Spannungszeichen",
       sec1_note: "Wenn das Gerät noch keine Daten hat (erster Start / Simulator), zeigt das Monster standardmäßig den Zustand Aktiv (2).",
@@ -919,13 +1124,27 @@
       sec5_title: "🌤 Wetteranimationen", sec5_desc: "Wetteranimationen werden nur im High-Power-Modus (Bildschirm an) aktiviert, um den Akku zu schonen. Regen und Schnee sind animierte Vollbild-Overlays; andere Bedingungen sind statische Vektorsymbole neben dem Temperatur-Badge.",
       w0_g_t: "☀️ Klar – Tag", w0_g_d: "Sonnensymbol mit Strahlen", w0_n_t: "🌙 Klar – Nacht", w0_n_d: "Sichelmondsymbol", w1_t: "☁️ Bewölkt", w1_d: "Statisches Wolkensymbol", w2_t: "🌧 Regen", w2_d: "Animiertes Vollbild — 14 diagonale Linien fließen", w3_t: "❄️ Schnee", w3_d: "Animiertes Vollbild — 16 Flocken oszillieren beim Absteigen", w5_t: "🌫 Nebel / Wind", w5_d: "Wolkensymbol mit horizontalen Streifen",
       tbl5_title: "Zuordnung der Garmin-Bedingungen → Animationscode", tbl5_th1: "Code", tbl5_th2: "Animation", tbl5_th3: "Typ", tbl5_th4: "Enthaltene Garmin-Bedingungen",
-      tbl5_r1_c2: "☀️ Sonne (Tag) / 🌙 Mond (Nacht)", tbl5_stat: "Statisches Symbol", tbl5_r2_c2: "☁️ Wolke", tbl5_r3_c2: "🌧 Vollbildregen", tbl5_anim: "Vollbildanimation", tbl5_r4_c2: "❄️ Vollbildschnee", tbl5_r5_c2: "🌫 Nebbel", sec5_panel: "Vollbildanimationen verwenden deterministische Partikel, die aus dem Frame-Counter abgeleitet werden — keine Zuweisungen pro Frame, kein Zustand pro Partikel. Regen: 14 diagonale Linien (x−4, y+12), die basierend auf phase = frame % 24 fließen. Schnee: 16 Kreise mit seitlicher Sinusschwingung + vertikalem Fall.", sec5_sub: "Unterscheidung Tag / Nacht", sec5_sub_d: "Für Code 0 (clear) wählt der Parameter isDay — berechnet als Stunde ∈ [7, 19] — zwischen der Zeichnung der Sonne und der des Sichelmonds.",
+      tbl5_r1_c2: "☀️ Sonne (Tag) / 🌙 Mond (Nacht)", tbl5_stat: "Statisches Symbol", tbl5_r2_c2: "☁️ Wolke", tbl5_r3_c2: "🌧 Vollbildregen", tbl5_anim: "Vollbildanimation", tbl5_r4_c2: "❄️ Vollbildschnee", tbl5_r5_c2: "🌫 Nebbel", sec5_panel: "Vollbildanimationen verwenden deterministische Partikel, die aus dem Frame-Counter abgeleitet werden — keine Zuweisungen pro Frame, kein Zustand pro Partikel. Regen: 14 diagonale Linien (x−4, y+12), die basierend auf phase = frame % 24 fließen. Schnee: 16 Kreise mit seitlicher Sinusschwingung + vertikalem Fall.", sec5_sub: "Unterscheidung Tag / Nacht", sec5_sub_d: "Für Code 0 (clear) wählt der Parameter isDay — berechnet als Stunde ∈ [7, 21] — zwischen der Zeichnung der Sonne und der des Sichelmonds.",
+      toc_2b: "Evolution & Devolution",
+      sec1_desc: "The monster has 7 states determined in real time. Training states (detected from movement) have the highest priority, then stress (≥ 70), then Body Battery. At night, during the profile's sleep window, the monster sleeps.",
+      sec1_panel: "Priority: Intense training → mood 6; Light training → mood 5; Stress ≥ 70 → mood 4; otherwise Body Battery: ≥70 → Hyper (3), ≥20 → Active (2), <20 → Tired (1). The sleep window forces mood 0 (Sleeping).",
+      mood0_t: "😴 Sleeping", mood0_d: "Sleep window: closed eyes, floating ZZZs", mood0_trig: "Sleep (night)", tbl1_m0_n: "Sleeping",
+      mood5_t: "🚶 Light training", mood5_d: "Walking, yoga, weights: the monster walks (animation)", mood5_trig: "Light activity detected",
+      mood6_t: "🏃 Intense training", mood6_d: "Running, cycling, gym: moving feet + sport headband + sweat drop", mood6_trig: "Intense activity detected",
+      st_f_n: "2 hip dots + 3 belly dots (except Volt)",
+      sec3_panel: "The XP value on the dial is effectiveXp = committed XP + today's live contribution. The gauge shows progress toward the next stage (stageProgress); there is no separate level.",
+      evo_title: "🔄 Evolution & Devolution",
+      evo_desc: "Kibo grows with your training and devolves with inactivity. Each active day adds XP; lazy or skipped days subtract XP, eventually dropping the monster to a previous stage. The cycle is reversible: a mirror of your habits.",
+      evo_cap: "Top: consistent training evolves the monster (Stage 0 → 1 → 2). Bottom: prolonged inactivity devolves it to the previous stage.",
+      evo_up_t: "⬆️ Evolution", evo_up_d: "Earn XP by training: active_minutes × 4 + steps ÷ 150 (+ VO₂max bonus). A day is worth at most 220 XP. Above 300 XP → Stage 1, above 1200 XP → Stage 2.",
+      evo_down_t: "⬇️ Devolution", evo_down_d: "A lazy day (below 20 XP) subtracts 90 XP and resets the streak. Skipped days (face not shown) also decay 90 XP/day (max 5). Below the threshold the monster devolves. XP never goes below zero.",
+      evo_panel: "XP-generating activity is detected by combining step cadence and heart rate (relative to resting), confirmed by rising active calories or low stress. So cycling, weights and yoga count, while stress while still is not mistaken for training.",
       footer: "Kibo · Connect IQ Watch Face · Design-Referenz · Juni 2025"
     },
     ja: {
       doc_ref: "デザイン仕様書", main_title: "Kibo – デザイン仕様書", last_mod: "最終更新日:", author: "著者:",
       toc_title: "コンテンツ", toc_1: "モンスターの状態 / 感情", toc_2: "進化マトリクス表", toc_3: "進化のためのXP計算式", toc_4: "アクティブカロリー計算式", toc_5: "天候アニメーション",
-      sec1_title: "🎭 モンスターの状態 / 感情", sec1_desc: "モンスターには、GarminのBody Batteryとストレスレベルによってリアルタイムに決定される5つの感情状態があります。ストレスが最優先され、65以上の場合はBody Batteryに関係なく「ストレス検知」状態になります。", sec1_panel: "読み取りの優先順位は次のとおりです：ストレス ≥ 65 → ストレス検知。それ以外はBody Batteryを参照：≥70 → ハイパー、≥20 → アクティブ、≥10 → 疲労、<10 → 疲弊。",
+      sec1_title: "🎭 モンスターの状態 / 感情", sec1_desc: "モンスターには、GarminのBody Batteryとストレスレベルによってリアルタイムに決定される7つの感情状態があります。ストレスが最優先され、70以上の場合はBody Batteryに関係なく「ストレス検知」状態になります。", sec1_panel: "読み取りの優先順位は次のとおりです：ストレス ≥ 70 → ストレス検知。それ以外はBody Batteryを参照：≥70 → ハイパー、≥20 → アクティブ、≥10 → 疲労、<10 → 疲弊。",
       mood0_t: "😴 疲弊", mood0_d: "目を閉じ、口を開け、ZZZが浮遊している状態", mood1_t: "😪 疲労", mood1_d: "重い瞼の半開き、ニュートラルな口元", mood2_t: "😊 アクティブ", mood2_d: "生き生きと開いた目、明るい笑顔", mood3_t: "🤩 ハイパー", mood3_d: "見開いた目、メガスマイル、輝く火花", mood4_t: "😰 ストレス検知", mood4_d: "ひそめられた眉、下がった口元、冷や汗",
       tbl1_title: "状態一覧表", tbl1_th2: "名称", tbl1_th4: "目", tbl1_th5: "口", tbl1_m0_n: "疲弊", tbl1_m0_e: "閉じた目、下がった瞼", tbl1_m0_m: "大きく開けたあくび（暗い円＋内側が赤）", tbl1_m0_ex: "浮遊する白いZZZ", tbl1_m1_n: "疲労", tbl1_m1_e: "開いた目、下がった虹彩＋半開き瞼", tbl1_m1_m: "直線（ニュートラル）", tbl1_m2_n: "アクティブ", tbl1_m2_e: "開いた目、中央の虹彩", tbl1_m2_m: "笑顔の三日月", tbl1_m3_n: "ハイパー", tbl1_m3_e: "見開いた大きな目、大きな虹彩", tbl1_m3_m: "大きな笑顔の三日月", tbl1_m3_ex: "頭の横に金色のスパークル", tbl1_m4_n: "ストレス検知", tbl1_m4_e: "開いた目、傾いた眉（\\ /）", tbl1_m4_m: "逆アーチ（への字口）", tbl1_m4_ex: "アニメーションする汗のしずく＋赤の緊張マーク",
       sec1_note: "デバイスにまだデータがない場合（初回起動 / シミュレーター）、モンスターはデフォルトで「アクティブ (2)」の状態を表示します。",
@@ -947,13 +1166,27 @@
       sec5_title: "🌤 天候アニメーション", sec5_desc: "天候アニメーションは、バッテリーへの影響を防ぐため、ハイパワーモード（画面点灯時）のみで作動します。雨と雪はフルスクリーンのアニメーションオーバーレイで、その他の状態は温度バッジの横に静的ベクターアイコンとして表示されます。",
       w0_g_t: "☀️ 快晴 – 昼", w0_g_d: "光線付きの太陽アイコン", w0_n_t: "🌙 快晴 – 夜", w0_n_d: "三日月アイコン", w1_t: "☁️ 曇り", w1_d: "静的な雲アイコン", w2_t: "🌧 雨", w2_d: "フルスクリーンアニメーション — 14本の斜線が流れる", w3_t: "❄️ 雪", w3_d: "フルスクリーンアニメーション — 16個の雪の結晶が揺れながら落ちる", w5_t: "🌫 霧 / 強風", w5_d: "水平方向の帯が付いた雲アイコン",
       tbl5_title: "Garmin天候条件 → アニメーションコードのマッピング", tbl5_th1: "コード", tbl5_th2: "アニメーション", tbl5_th3: "タイプ", tbl5_th4: "対象となるGarminの天候条件",
-      tbl5_r1_c2: "☀️ 太陽（昼）/ 🌙 月（夜）", tbl5_stat: "静的アイコン", tbl5_r2_c2: "☁️ 雲", tbl5_r3_c2: "🌧 フルスクリーン雨", tbl5_anim: "フルスクリーンアニメーション", tbl5_r4_c2: "❄️ フルスクリーン雪", tbl5_r5_c2: "🌫 霧", sec5_panel: "フルスクリーンアニメーションは、フレームカウンターから派生した決定論的パーティクルを使用します。これにより、フレームごとのメモリ割り当てはゼロになり、パーティクルごとの状態保持も不要になります。雨：phase = frame % 24 に基づいて14本の斜線（x−4, y+12）が流れます。雪：横方向の正弦波振動＋垂直落下の16個の円。", sec5_sub: "昼夜の判別", sec5_sub_d: "コード0（clear）の場合、時間 ∈ [7, 19] として計算される isDay パラメータにより、太陽の描画か三日月の描画かが選択されます。",
+      tbl5_r1_c2: "☀️ 太陽（昼）/ 🌙 月（夜）", tbl5_stat: "静的アイコン", tbl5_r2_c2: "☁️ 雲", tbl5_r3_c2: "🌧 フルスクリーン雨", tbl5_anim: "フルスクリーンアニメーション", tbl5_r4_c2: "❄️ フルスクリーン雪", tbl5_r5_c2: "🌫 霧", sec5_panel: "フルスクリーンアニメーションは、フレームカウンターから派生した決定論的パーティクルを使用します。これにより、フレームごとのメモリ割り当てはゼロになり、パーティクルごとの状態保持も不要になります。雨：phase = frame % 24 に基づいて14本の斜線（x−4, y+12）が流れます。雪：横方向の正弦波振動＋垂直落下の16個の円。", sec5_sub: "昼夜の判別", sec5_sub_d: "コード0（clear）の場合、時間 ∈ [7, 21] として計算される isDay パラメータにより、太陽の描画か三日月の描画かが選択されます。",
+      toc_2b: "Evolution & Devolution",
+      sec1_desc: "The monster has 7 states determined in real time. Training states (detected from movement) have the highest priority, then stress (≥ 70), then Body Battery. At night, during the profile's sleep window, the monster sleeps.",
+      sec1_panel: "Priority: Intense training → mood 6; Light training → mood 5; Stress ≥ 70 → mood 4; otherwise Body Battery: ≥70 → Hyper (3), ≥20 → Active (2), <20 → Tired (1). The sleep window forces mood 0 (Sleeping).",
+      mood0_t: "😴 Sleeping", mood0_d: "Sleep window: closed eyes, floating ZZZs", mood0_trig: "Sleep (night)", tbl1_m0_n: "Sleeping",
+      mood5_t: "🚶 Light training", mood5_d: "Walking, yoga, weights: the monster walks (animation)", mood5_trig: "Light activity detected",
+      mood6_t: "🏃 Intense training", mood6_d: "Running, cycling, gym: moving feet + sport headband + sweat drop", mood6_trig: "Intense activity detected",
+      st_f_n: "2 hip dots + 3 belly dots (except Volt)",
+      sec3_panel: "The XP value on the dial is effectiveXp = committed XP + today's live contribution. The gauge shows progress toward the next stage (stageProgress); there is no separate level.",
+      evo_title: "🔄 Evolution & Devolution",
+      evo_desc: "Kibo grows with your training and devolves with inactivity. Each active day adds XP; lazy or skipped days subtract XP, eventually dropping the monster to a previous stage. The cycle is reversible: a mirror of your habits.",
+      evo_cap: "Top: consistent training evolves the monster (Stage 0 → 1 → 2). Bottom: prolonged inactivity devolves it to the previous stage.",
+      evo_up_t: "⬆️ Evolution", evo_up_d: "Earn XP by training: active_minutes × 4 + steps ÷ 150 (+ VO₂max bonus). A day is worth at most 220 XP. Above 300 XP → Stage 1, above 1200 XP → Stage 2.",
+      evo_down_t: "⬇️ Devolution", evo_down_d: "A lazy day (below 20 XP) subtracts 90 XP and resets the streak. Skipped days (face not shown) also decay 90 XP/day (max 5). Below the threshold the monster devolves. XP never goes below zero.",
+      evo_panel: "XP-generating activity is detected by combining step cadence and heart rate (relative to resting), confirmed by rising active calories or low stress. So cycling, weights and yoga count, while stress while still is not mistaken for training.",
       footer: "Kibo · Connect IQ Watch Face · デザイン仕様書 · 2025年6月"
     },
     zh: {
       doc_ref: "设计参考规范", main_title: "Kibo – 设计参考规范", last_mod: "最后修改:", author: "作者:",
       toc_title: "目录", toc_1: "怪物状态与情绪映射", toc_2: "进化矩阵分支表", toc_3: "进化经验值计算公式", toc_4: "动态活动热量公式", toc_5: "高能天气动画渲染",
-      sec1_title: "🎭 宠物状态与情绪映射", sec1_desc: "宠物拥有5种不同的情感状态，这些状态通过连接到Garmin底层的身体电量和压力指标进行实时解算。压力指标具备最高系统优先级：一旦压力 ≥ 65，宠物立即切入高压焦虑状态，无视当前的身体电量状况。", sec1_panel: "读取优先级规则为：压力 ≥ 65 → 高压焦虑。其余情况下使用身体电量：≥70 → 亢奋，≥20 → 活跃，≥10 → 疲惫，<10 → 力竭。",
+      sec1_title: "🎭 宠物状态与情绪映射", sec1_desc: "宠物拥有7种不同的情感状态，这些状态通过连接到Garmin底层的身体电量和压力指标进行实时解算。压力指标具备最高系统优先级：一旦压力 ≥ 70，宠物立即切入高压焦虑状态，无视当前的身体电量状况。", sec1_panel: "读取优先级规则为：压力 ≥ 70 → 高压焦虑。其余情况下使用身体电量：≥70 → 亢奋，≥20 → 活跃，≥10 → 疲惫，<10 → 力竭。",
       mood0_t: "😴 力竭", mood0_d: "双眼闭合、有规律张嘴，并有ZZZ符号在头部上方悬浮漂移", mood1_t: "😪 疲惫", mood1_d: "眼睑下垂呈半睁开状态，嘴角保持水平中性", mood2_t: "😊 活跃", mood2_d: "双眼睁开、神采奕奕，嘴角上扬露出标准微笑", mood3_t: "🤩 亢奋", mood3_d: "双眼由于兴奋放大，大范围微笑嘴角，同时面部两侧生成金色星星闪烁特效", mood4_t: "😰 高压焦虑", mood4_d: "眉头紧锁、下撇嘴角，同时额头一侧浮现动态汗滴与红色张力线条",
       tbl1_title: "状态参数全局对照表", tbl1_th2: "名称", tbl1_th4: "眼部图形", tbl1_th5: "嘴部图形", tbl1_m0_n: "力竭", tbl1_m0_e: "闭合圆弧、模拟深睡眼睑", tbl1_m0_m: "大开哈欠（深色外圈 + 红色内里）", tbl1_m0_ex: "白色悬浮动态 ZZZ 字符", tbl1_m1_n: "疲惫", tbl1_m1_e: "睁开、瞳孔靠下 + 遮挡一半的眼睑", tbl1_m1_m: "扁平横线（中性状态）", tbl1_m2_n: "活跃", tbl1_m2_e: "常规睁开、瞳孔居中", tbl1_m2_m: "常规上扬月牙微笑", tbl1_m3_n: "亢奋", tbl1_m3_e: "放大版圆睁、高亮大瞳孔", tbl1_m3_m: "夸张版大月牙微笑", tbl1_m3_ex: "头部两侧对称环绕金色十字闪烁星光", tbl1_m4_n: "高压焦虑", tbl1_m4_e: "常规睁开、额外叠加倒八字倾斜眉毛 (\\ /)", tbl1_m4_m: "倒扣月牙嘴角（哭脸弧度）", tbl1_m4_ex: "高亮蓝色动态水滴 + 额头红晕张力表现线",
       sec1_note: "当可穿戴设备初始化未获取到任何有效底层数据时（例如首次开机或模拟器开辟全新环境），宠物默认展示活跃(2)状态。",
@@ -975,7 +1208,21 @@
       sec5_title: "🌤 高能天气动画渲染", sec5_desc: "由于实时像素刷写对可穿戴设备具有极高功耗负担，天气动态动效仅在表盘切入高亮（High-Power，即抬腕亮屏）状态下全效开启。降雨与降雪表现为覆盖全局的动态粒子层，其余气象在数字温度角标旁由静态矢量图标表达。",
       w0_g_t: "☀️ 晴空万里 – 白昼", w0_g_d: "包含标准外扩辐射光芒线的太阳矢量图标", w0_n_t: "🌙 月朗星稀 – 夜间", w0_n_d: "带阴影剪裁视角的月牙矢量图标", w1_t: "☁️ 阴云密布", w1_d: "静态层叠积雨云矢量图标", w2_t: "🌧 暴雨倾盆", w2_d: "全屏高能动画动效 — 14条斜向雨丝矩阵在亮屏状态下高速循环下坠", w3_t: "❄️ 漫天大雪", w3_d: "全屏高能动画动效 — 16枚冰晶粒子按照正弦波轨迹做钟摆式降落摆动", w5_t: "🌫 浓雾/大风吹袭", w5_d: "积雨云下方叠加三道高低错落的水平气流湍流横线",
       tbl5_title: "Garmin 硬件天气代码到动效核心编解码映射", tbl5_th1: "硬件参数", tbl5_th2: "表盘具体表现形式", tbl5_th3: "气象大类", tbl5_th4: "包含的 Garmin 原生气象状态集",
-      tbl5_r1_c2: "☀️ 艳阳（白昼状态下） / 🌙 弯月（夜间状态下）", tbl5_stat: "静态图标", tbl5_r2_c2: "☁️ 积云", tbl5_r3_c2: "🌧 全屏动态降雨粒子束", tbl5_anim: "全局动画动效", tbl5_r4_c2: "❄️ 全屏正弦波粒子降雪", tbl5_r5_c2: "🌫 雾气横线", sec5_panel: "为了在微型手表处理器上实现丝滑流畅的满帧动画且不产生多余运存开销，全屏动效摒弃了传统对象创建，采用完全基于当前帧步进计数器（Frame Counter）的确定性公式进行像素刷写。降雨：14条斜向线条根据 phase = frame % 24 严格推算像素坐标偏置。降雪：16枚圆形粒子做正弦波（Sin）横向位移与纵向平移叠加。", sec5_sub: "昼夜状态自动切分规则", sec5_sub_d: "当底层抛出 0 (晴朗) 代码时，固件会根据当前系统时间执行 isDay 判定（标准边界规定在 [7, 19] 点区间），据此自动在艳阳和弯月两套全矢量画作之间完成透明切换。",
+      tbl5_r1_c2: "☀️ 艳阳（白昼状态下） / 🌙 弯月（夜间状态下）", tbl5_stat: "静态图标", tbl5_r2_c2: "☁️ 积云", tbl5_r3_c2: "🌧 全屏动态降雨粒子束", tbl5_anim: "全局动画动效", tbl5_r4_c2: "❄️ 全屏正弦波粒子降雪", tbl5_r5_c2: "🌫 雾气横线", sec5_panel: "为了在微型手表处理器上实现丝滑流畅的满帧动画且不产生多余运存开销，全屏动效摒弃了传统对象创建，采用完全基于当前帧步进计数器（Frame Counter）的确定性公式进行像素刷写。降雨：14条斜向线条根据 phase = frame % 24 严格推算像素坐标偏置。降雪：16枚圆形粒子做正弦波（Sin）横向位移与纵向平移叠加。", sec5_sub: "昼夜状态自动切分规则", sec5_sub_d: "当底层抛出 0 (晴朗) 代码时，固件会根据当前系统时间执行 isDay 判定（标准边界规定在 [7, 21] 点区间），据此自动在艳阳和弯月两套全矢量画作之间完成透明切换。",
+      toc_2b: "Evolution & Devolution",
+      sec1_desc: "The monster has 7 states determined in real time. Training states (detected from movement) have the highest priority, then stress (≥ 70), then Body Battery. At night, during the profile's sleep window, the monster sleeps.",
+      sec1_panel: "Priority: Intense training → mood 6; Light training → mood 5; Stress ≥ 70 → mood 4; otherwise Body Battery: ≥70 → Hyper (3), ≥20 → Active (2), <20 → Tired (1). The sleep window forces mood 0 (Sleeping).",
+      mood0_t: "😴 Sleeping", mood0_d: "Sleep window: closed eyes, floating ZZZs", mood0_trig: "Sleep (night)", tbl1_m0_n: "Sleeping",
+      mood5_t: "🚶 Light training", mood5_d: "Walking, yoga, weights: the monster walks (animation)", mood5_trig: "Light activity detected",
+      mood6_t: "🏃 Intense training", mood6_d: "Running, cycling, gym: moving feet + sport headband + sweat drop", mood6_trig: "Intense activity detected",
+      st_f_n: "2 hip dots + 3 belly dots (except Volt)",
+      sec3_panel: "The XP value on the dial is effectiveXp = committed XP + today's live contribution. The gauge shows progress toward the next stage (stageProgress); there is no separate level.",
+      evo_title: "🔄 Evolution & Devolution",
+      evo_desc: "Kibo grows with your training and devolves with inactivity. Each active day adds XP; lazy or skipped days subtract XP, eventually dropping the monster to a previous stage. The cycle is reversible: a mirror of your habits.",
+      evo_cap: "Top: consistent training evolves the monster (Stage 0 → 1 → 2). Bottom: prolonged inactivity devolves it to the previous stage.",
+      evo_up_t: "⬆️ Evolution", evo_up_d: "Earn XP by training: active_minutes × 4 + steps ÷ 150 (+ VO₂max bonus). A day is worth at most 220 XP. Above 300 XP → Stage 1, above 1200 XP → Stage 2.",
+      evo_down_t: "⬇️ Devolution", evo_down_d: "A lazy day (below 20 XP) subtracts 90 XP and resets the streak. Skipped days (face not shown) also decay 90 XP/day (max 5). Below the threshold the monster devolves. XP never goes below zero.",
+      evo_panel: "XP-generating activity is detected by combining step cadence and heart rate (relative to resting), confirmed by rising active calories or low stress. So cycling, weights and yoga count, while stress while still is not mistaken for training.",
       footer: "Kibo · Garmin Connect IQ 表盘开发团队 · 核心架构设计参考手册 · 2025年6月"
     }
   };
@@ -992,8 +1239,69 @@
     });
   }
 
+
+  // ---- decorative background Kibo creatures (element families) ----
+  function kiboSVG(base, light, accent, acc) {
+    var top = {
+      flame:  '<path d="M32 4 q6 8 0 15 q-6-7 0-15z" fill="'+accent+'"/>',
+      fin:    '<path d="M32 4 q7 7 0 14 q-2-8 0-14z" fill="'+accent+'"/>',
+      leaf:   '<path d="M19 19 q-8-6-2 6 q6 1 2-6z" fill="'+accent+'"/><path d="M45 19 q8-6 2 6 q-6 1-2-6z" fill="'+accent+'"/>',
+      bolt:   '<path d="M35 4 l-8 12 h5 l-3 10 11-14h-5z" fill="'+accent+'"/>',
+      crystal:'<path d="M23 18 l3-13 3 13z M35 18 l3-13 3 13z" fill="'+accent+'"/>',
+      wings:  '<path d="M12 35 q-10-5-3 8 q8 1 3-8z" fill="'+accent+'"/><path d="M52 35 q10-5 3 8 q-8 1-3-8z" fill="'+accent+'"/>',
+      antler: '<path d="M23 16 l-4-11 M23 16 l3-8 M41 16 l4-11 M41 16 l-3-8" stroke="'+accent+'" stroke-width="2" fill="none" stroke-linecap="round"/>',
+      star:   '<path d="M22 13 l-3-8 M42 13 l3-8" stroke="'+accent+'" stroke-width="2" stroke-linecap="round"/><path d="M18 4 l1.4 3 3 .4-2.2 2 .6 3-2.8-1.4-2.8 1.4 .6-3-2.2-2 3-.4z" fill="'+accent+'"/>'
+    }[acc] || '';
+    return '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">'+top+
+      '<ellipse cx="26" cy="55" rx="5" ry="3" fill="'+base+'"/><ellipse cx="38" cy="55" rx="5" ry="3" fill="'+base+'"/>'+
+      '<circle cx="32" cy="36" r="20" fill="'+base+'"/><circle cx="32" cy="41" r="12" fill="'+light+'"/>'+
+      '<circle cx="26" cy="35" r="2.4" fill="#22303A"/><circle cx="38" cy="35" r="2.4" fill="#22303A"/>'+
+      '<path d="M28 42 Q32 47 36 42" fill="#C0392B"/>'+
+      '<circle cx="22" cy="40" r="3" fill="#FF6FA0" opacity=".5"/><circle cx="42" cy="40" r="3" fill="#FF6FA0" opacity=".5"/></svg>';
+  }
+  (function(){
+    var fam = [
+      ['#FF7A33','#FFD9A8','#FFB400','flame'],
+      ['#3FB5E6','#CFF2FF','#7CF0E0','fin'],
+      ['#5FC56B','#E2F6C9','#2F9E50','leaf'],
+      ['#FFD23F','#FFF3C4','#7B5BFF','bolt'],
+      ['#9FE3F2','#F2FCFF','#C7B7FF','crystal'],
+      ['#C9B7FF','#F4EEFF','#FFFFFF','wings'],
+      ['#C79A63','#EDD9B5','#9C7038','antler'],
+      ['#7C5BE0','#D8C9FF','#FFE27A','star']
+    ];
+    var spots = [
+      ['left:3%;top:16%', 0, 1.0, -8],
+      ['right:4%;top:11%', 5, 0.9,  6],
+      ['left:5%;top:40%', 6, 0.8, -4],
+      ['right:5%;top:34%', 1, 1.0,  8],
+      ['left:6%;top:63%', 2, 0.95,-6],
+      ['right:6%;top:60%', 3, 0.85, 5],
+      ['left:9%;top:85%', 7, 0.9, -3],
+      ['right:8%;top:82%', 4, 1.0,  7]
+    ];
+    var row = document.getElementById('monsterRow');
+    if (row) {
+      fam.forEach(function(f){
+        var w = document.createElement('span');
+        w.innerHTML = kiboSVG(f[0], f[1], f[2], f[3]);
+        row.appendChild(w);
+      });
+    }
+    var host = document.getElementById('bgCreatures');
+    if (!host) return;
+    spots.forEach(function(sp){
+      var f = fam[sp[1]];
+      var d = document.createElement('div');
+      d.className = 'crt';
+      d.setAttribute('style', sp[0] + ';transform:scale('+sp[2]+') rotate('+sp[3]+'deg)');
+      d.innerHTML = kiboSVG(f[0], f[1], f[2], f[3]);
+      host.appendChild(d);
+    });
+  })();
+
   // Avvio iniziale in Italiano
-  translatePage('en');
+  translatePage('it');
 </script>
 </body>
 </html>
