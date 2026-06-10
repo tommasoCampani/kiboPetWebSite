@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+/.idea
+/inspectionProfiles/profiles_settings.xml
+/kiboWatch.iml
+/misc.xml
+/modules.xml
+/vcs.xml
