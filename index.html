@@ -1467,4 +1467,54 @@
     }[acc] || '';
     return '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">'+top+
       '<ellipse cx="26" cy="55" rx="5" ry="3" fill="'+base+'"/><ellipse cx="38" cy="55" rx="5" ry="3" fill="'+base+'"/>'+
-      '<circle cx="32" cy="36" r="20" fill="'+base+'
+      '<circle cx="32" cy="36" r="20" fill="'+base+'"/><circle cx="32" cy="41" r="12" fill="'+light+'"/>'+
+      '<circle cx="26" cy="35" r="2.4" fill="#22303A"/><circle cx="38" cy="35" r="2.4" fill="#22303A"/>'+
+      '<path d="M28 42 Q32 47 36 42" fill="#C0392B"/>'+
+      '<circle cx="22" cy="40" r="3" fill="#FF6FA0" opacity=".5"/><circle cx="42" cy="40" r="3" fill="#FF6FA0" opacity=".5"/></svg>';
+  }
+  (function(){
+    var fam = [
+      ['#FF7A33','#FFD9A8','#FFB400','flame'],
+      ['#3FB5E6','#CFF2FF','#7CF0E0','fin'],
+      ['#5FC56B','#E2F6C9','#2F9E50','leaf'],
+      ['#FFD23F','#FFF3C4','#7B5BFF','bolt'],
+      ['#9FE3F2','#F2FCFF','#C7B7FF','crystal'],
+      ['#C9B7FF','#F4EEFF','#FFFFFF','wings'],
+      ['#C79A63','#EDD9B5','#9C7038','antler'],
+      ['#7C5BE0','#D8C9FF','#FFE27A','star']
+    ];
+    var spots = [
+      ['left:3%;top:16%', 0, 1.0, -8],
+      ['right:4%;top:11%', 5, 0.9,  6],
+      ['left:5%;top:40%', 6, 0.8, -4],
+      ['right:5%;top:34%', 1, 1.0,  8],
+      ['left:6%;top:63%', 2, 0.95,-6],
+      ['right:6%;top:60%', 3, 0.85, 5],
+      ['left:9%;top:85%', 7, 0.9, -3],
+      ['right:8%;top:82%', 4, 1.0,  7]
+    ];
+    var row = document.getElementById('monsterRow');
+    if (row) {
+      fam.forEach(function(f){
+        var w = document.createElement('span');
+        w.innerHTML = kiboSVG(f[0], f[1], f[2], f[3]);
+        row.appendChild(w);
+      });
+    }
+    var host = document.getElementById('bgCreatures');
+    if (!host) return;
+    spots.forEach(function(sp){
+      var f = fam[sp[1]];
+      var d = document.createElement('div');
+      d.className = 'crt';
+      d.setAttribute('style', sp[0] + ';transform:scale('+sp[2]+') rotate('+sp[3]+'deg)');
+      d.innerHTML = kiboSVG(f[0], f[1], f[2], f[3]);
+      host.appendChild(d);
+    });
+  })();
+
+  // Avvio iniziale in Italiano
+  translatePage('it');
+</script>
+</body>
+</html>
