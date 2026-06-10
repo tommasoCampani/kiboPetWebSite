@@ -583,43 +583,6 @@
       </table>
     </div>
 
-    <h3 data-i18n="tbl3_title">Cambio visivo per stadio</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th data-i18n="tbl3_th1">Stadio</th>
-            <th data-i18n="tbl3_th2">Scala corpo</th>
-            <th data-i18n="tbl3_th3">Colore corpo</th>
-            <th data-i18n="tbl3_th4">Colore pancia</th>
-            <th data-i18n="tbl3_th5">Segni evolutivi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="badge badge-grey" data-i18n="st_b">0 – Base</span></td>
-            <td>75%</td>
-            <td>Base palette</td>
-            <td>Light palette</td>
-            <td data-i18n="st_b_n">Nessuno</td>
-          </tr>
-          <tr>
-            <td><span class="badge badge-blue" data-i18n="st_i">1 – Intermedio</span></td>
-            <td>80%</td>
-            <td>Shade palette</td>
-            <td>Light palette</td>
-            <td data-i18n="st_i_n">2 puntini accent sui fianchi</td>
-          </tr>
-          <tr>
-            <td><span class="badge badge-purple" data-i18n="st_f">2 – Finale</span></td>
-            <td>90%</td>
-            <td>Shade palette</td>
-            <td>Light palette</td>
-            <td data-i18n="st_f_n">2 puntini fianchi + 3 puntini ventre</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 
   <div class="section" id="evo-mechanic">
@@ -970,7 +933,7 @@
 
     <div class="panel panel-note">
       <div class="panel-icon">⚠️</div>
-      <div data-i18n="note2"><strong>Calorie attive ≠ quelle di Garmin.</strong> Il valore delle calorie attive mostrato da Kibo <strong>non corrisponde</strong> a quello visualizzato nell'app/widget Garmin, perché la nostra è una <strong>formula custom</strong> (calorie totali − BMR Mifflin-St Jeor sul tempo trascorso, con fallback). I dettagli del calcolo sono quelli descritti nella sezione "Formula calorie attive" qui sopra.</div>
+      <div data-i18n="note2"><strong>Calorie attive ≠ quelle di Garmin.</strong> Il valore delle calorie attive mostrato da Kibo (per la strategia 2) <strong>può non corrispondere</strong> a quello visualizzato nell'app/widget Garmin, perché la nostra è una <strong>formula custom</strong> (calorie totali − BMR Mifflin-St Jeor sul tempo trascorso, con fallback). I dettagli del calcolo sono quelli descritti nella sezione "Formula calorie attive" qui sopra.</div>
     </div>
   </div>
 
@@ -994,8 +957,6 @@
       sec2_title: "🌱 Tabella evoluzioni", sec2_desc: "Ogni famiglia ha 3 stadi evolutivi (0 → 1 → 2). L'evoluzione è guidata dall'XP cumulativo; la de-evoluzione avviene se l'XP scende sotto la soglia per inattività.",
       tbl2_th1: "Famiglia", tbl2_th2: "Tipo", tbl2_th3: "Stadio 0 – Base", tbl2_th4: "Stadio 1 – Intermedio", tbl2_th5: "Stadio 2 – Finale", tbl2_th6: "Accento visivo",
       t_fire: "🔥 Fiamma", t_horns1: "(+ corna ariete)", t_crest1: "(+ cresta di fiamme)", t_accent1: "Coda fiamma, cresta animata", t_water: "💧 Pinne", t_fin1: "(+ pinna dorsale)", t_gills1: "(+ branchie + pinne pettorali)", t_accent2: "Pinna dorsale, coda squalo", t_grass: "🍃 Foglia", t_leaf1: "(+ orecchie fogliari)", t_flower1: "(+ fiore sbocciato)", t_accent3: "Gemma sulla testa, petali", t_elec: "⚡ Folgore", t_light1: "(+ orecchie fulmine)", t_spark1: "(+ scintille guance)", t_accent4: "Coda fulmine, scintille animate", t_ice: "🧊 Cristallo", t_cryst1: "(+ 2 cristalli-corna)", t_crown1: "(+ corona centrale + schegge dorsali)", t_accent5: "Schegge di ghiaccio, cristalli", t_air: "🌬 Ali", t_wings1: "(+ ali piccole)", t_wings2: "(+ ali grandi + aureola)", t_accent6: "Nuvola sotto i piedi, aureola", t_ground: "🪨 Spighe", t_deer1: "(+ corna di cervo + gemma fronte)", t_rock1: "(+ lastre rocciose dorsali)", t_accent7: "Sopracciglio spesso, corna ramificate", t_star: "⭐ Stelle", t_star1: "(+ antenne a stella)", t_halo1: "(+ aureola + stelle orbitanti)", t_accent8: "Stelle orbitanti, aureola dorata",
-      tbl3_title: "Cambio visivo per stadio", tbl3_th1: "Stadio", tbl3_th2: "Scala corpo", tbl3_th3: "Colore corpo", tbl3_th4: "Colore pancia", tbl3_th5: "Segni evolutivi",
-      st_b: "0 – Base", st_b_n: "Nessuno", st_i: "1 – Intermedio", st_i_n: "2 puntini accent sui fianchi", st_f: "2 – Finale", st_f_n: "2 puntini fianchi + 3 puntini ventre",
       sec3_title: "📈 Formula XP per evoluzione", sec3_desc: "L'XP è la misura dell'impegno fisico giornaliero. Ogni giorno contribuisce fino a un massimo di 220 XP; l'inattività fa decadere i punti.",
       f1_title: "XP giornaliero lordo", f1_v1: "minuti_attivi – minuti di attività moderata/intensa del giorno (ActivityMonitor)", f1_v2: "passi – conteggio passi cumulativo del giorno", f1_v3: "Bonus VO₂max (opzionale, se abilitato in impostazioni): (vo2max − 30) × 3 se vo2max > 30", f1_v4: "Cap giornaliero: 220 XP — giornate di super-allenamento non saltano tappe",
       f2_title: "Soglie evoluzione", f2_v1: "Stadio 0 → 1: ~2–3 settimane di allenamento regolare (30 min/die)", f2_v2: "Stadio 1 → 2: ~5–6 settimane di allenamento regolare", f2_v3: "De-evoluzione: giornata pigra (< 20 XP) = −90 XP cumulativi", f2_v4: "Giorni saltati (face non mostrata): −90 XP/die, massimo 5 giorni consecutivi",
@@ -1050,7 +1011,7 @@
       toc_7: "Note bene · compatibilità",
       sec7_title: "⚠️ Note bene · compatibilità dispositivi",
       note1: "<strong>Dati non disponibili → default.</strong> Se un dispositivo non espone la Body Battery, la creatura mostra sempre lo stato Attivo (mood 2). Lo stesso vale per tutti gli altri servizi (stress, meteo, VO₂max, recupero, sonno, ecc.): se riusciamo a recuperarli da Garmin li usiamo, altrimenti ricorriamo a un valore di default o nascondiamo il campo. Tutto questo dipende dai dispositivi e da quali funzioni hanno in modo nativo: lo stesso codice gira su un Fenix di fascia alta e su un Instinct base, adattandosi a ciò che l'orologio può misurare.",
-      note2: "<strong>Calorie attive ≠ quelle di Garmin.</strong> Il valore delle calorie attive mostrato da Kibo non corrisponde a quello visualizzato nell'app/widget Garmin, perché la nostra è una formula custom (calorie totali − BMR Mifflin-St Jeor sul tempo trascorso, con fallback). I dettagli del calcolo sono quelli descritti nella sezione 'Formula calorie attive' qui sopra.",
+      note2: "<strong>Calorie attive ≠ quelle di Garmin.</strong> Il valore delle calorie attive mostrato da Kibo può non corrispondere a quello visualizzato nell'app/widget Garmin, perché la nostra è una formula custom (calorie totali − BMR Mifflin-St Jeor sul tempo trascorso, con fallback). I dettagli del calcolo sono quelli descritti nella sezione 'Formula calorie attive' qui sopra.",
       footer: "Kibo · Connect IQ Watch Face · Design Reference"
     },
     en: {
@@ -1063,8 +1024,6 @@
       sec2_title: "🌱 Evolution Table", sec2_desc: "Each family has 3 evolutionary stages (0 → 1 → 2). Evolution is driven by cumulative XP; devolution occurs if XP drops below the threshold due to inactivity.",
       tbl2_th1: "Family", tbl2_th2: "Type", tbl2_th3: "Stage 0 – Base", tbl2_th4: "Stage 1 – Intermediate", tbl2_th5: "Stage 2 – Final", tbl2_th6: "Visual Accent",
       t_fire: "🔥 Flame", t_horns1: "(+ ram horns)", t_crest1: "(+ flame crest)", t_accent1: "Flame tail, animated crest", t_water: "💧 Fins", t_fin1: "(+ dorsal fin)", t_gills1: "(+ gills + pectoral fins)", t_accent2: "Dorsal fin, shark tail", t_grass: "🍃 Leaf", t_leaf1: "(+ leaf ears)", t_flower1: "(+ bloomed flower)", t_accent3: "Head gem, petals", t_elec: "⚡ Lightning", t_light1: "(+ lightning ears)", t_spark1: "(+ cheek sparks)", t_accent4: "Lightning tail, animated sparks", t_ice: "🧊 Crystal", t_cryst1: "(+ 2 crystal-horns)", t_crown1: "(+ central crown + dorsal shards)", t_accent5: "Ice shards, crystals", t_air: "🌬 Wings", t_wings1: "(+ small wings)", t_wings2: "(+ large wings + halo)", t_accent6: "Cloud under feet, halo", t_ground: "🪨 Spikes", t_deer1: "(+ deer antlers + forehead gem)", t_rock1: "(+ dorsal rock plates)", t_accent7: "Thick eyebrow, branched horns", t_star: "⭐ Stars", t_star1: "(+ star antennas)", t_halo1: "(+ halo + orbiting stars)", t_accent8: "Orbiting stars, golden halo",
-      tbl3_title: "Visual Change per Stage", tbl3_th1: "Stage", tbl3_th2: "Body Scale", tbl3_th3: "Body Color", tbl3_th4: "Belly Color", tbl3_th5: "Evolutionary Marks",
-      st_b: "0 – Base", st_b_n: "None", st_i: "1 – Intermediate", st_i_n: "2 accent dots on hips", st_f: "2 – Final", st_f_n: "2 hip dots + 3 belly dots",
       sec3_title: "📈 XP Formula per Evolution", sec3_desc: "XP is the measure of daily physical effort. Each day contributes up to a max of 220 XP; inactivity decays points.",
       f1_title: "Gross Daily XP", f1_v1: "minuti_attivi – daily moderate/vigorous activity minutes (ActivityMonitor)", f1_v2: "passi – cumulative step count of the day", f1_v3: "VO₂max Bonus (optional, if enabled in settings): (vo2max − 30) × 3 if vo2max > 30", f1_v4: "Daily Cap: 220 XP — super-workout days don't skip stages",
       f2_title: "Evolution Thresholds", f2_v1: "Stage 1 → XP ≥ 300 | Stage 2 → XP ≥ 1200", f2_v2: "Stage 0 → 1: ~2–3 weeks of regular training (30 min/day)", f2_v3: "Devolution: lazy day (< 20 XP) = −90 cumulative XP", f2_v4: "Skipped days (face not shown): −90 XP/day, maximum 5 consecutive days",
@@ -1119,7 +1078,7 @@
       toc_7: "Notes · compatibility",
       sec7_title: "⚠️ Notes · device compatibility",
       note1: "<strong>Data unavailable → default.</strong> If a device does not expose Body Battery, the creature always shows the Active state (mood 2). The same applies to every other service (stress, weather, VO₂max, recovery, sleep, etc.): if we can fetch them from Garmin we use them, otherwise we fall back to a default value or hide the field. This all depends on the devices and which features they support natively: the same code runs on a high-end Fenix and a basic Instinct, adapting to what the watch can measure.",
-      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo does not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
+      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo may not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
       footer: "Kibo · Connect IQ Watch Face · Design Reference"
     },
     es: {
@@ -1132,8 +1091,6 @@
       sec2_title: "🌱 Tabla de evoluciones", sec2_desc: "Cada familia tiene 3 etapas evolutivas (0 → 1 → 2). La evolución está guiada por el XP acumulado; la devolución ocurre si el XP cae por debajo del umbral debido a la inactividad.",
       tbl2_th1: "Familia", tbl2_th2: "Tipo", tbl2_th3: "Etapa 0 – Base", tbl2_th4: "Etapa 1 – Intermedia", tbl2_th5: "Etapa 2 – Final", tbl2_th6: "Acento visual",
       t_fire: "🔥 Llama", t_horns1: "(+ cuernos de carnero)", t_crest1: "(+ cresta de fuego)", t_accent1: "Cola de fuego, cresta animada", t_water: "💧 Aletas", t_fin1: "(+ aleta dorsal)", t_gills1: "(+ branquias + aletas pectorales)", t_accent2: "Aleta dorsal, cola de tiburón", t_grass: "🍃 Hoja", t_leaf1: "(+ orejas de hoja)", t_flower1: "(+ flor abierta)", t_accent3: "Gema en la cabeza, pétalos", t_elec: "⚡ Rayo", t_light1: "(+ orejas de rayo)", t_spark1: "(+ chispas en las mejillas)", t_accent4: "Cola de rayo, chispas animadas", t_ice: "🧊 Cristal", t_cryst1: "(+ 2 cuernos de cristal)", t_crown1: "(+ corona central + fragmentos dorsales)", t_accent5: "Fragmentos de hielo, cristales", t_air: "🌬 Alas", t_wings1: "(+ alas pequeñas)", t_wings2: "(+ alas grandes + aureola)", t_accent6: "Nube bajo los pies, aureola", t_ground: "🪨 Espigas", t_deer1: "(+ astas de ciervo + gema en la frente)", t_rock1: "(+ placas rocosas dorsales)", t_accent7: "Ceja gruesa, cuernos ramificados", t_star: "⭐ Estrellas", t_star1: "(+ antenas de estrella)", t_halo1: "(+ aureola + estrellas orbitando)", t_accent8: "Estrellas orbitando, aureola dorada",
-      tbl3_title: "Cambio visual por etapa", tbl3_th1: "Etapa", tbl3_th2: "Escala cuerpo", tbl3_th3: "Color cuerpo", tbl3_th4: "Color vientre", tbl3_th5: "Marcas evolutivas",
-      st_b: "0 – Base", st_b_n: "Ninguno", st_i: "1 – Intermedia", st_i_n: "2 puntos de acento en las caderas", st_f: "2 – Final", st_f_n: "2 puntos en caderas + 3 puntos en vientre",
       sec3_title: "📈 Fórmula de XP para evolución", sec3_desc: "El XP es la medida del esfuerzo físico diario. Cada día contribuye hasta un máximo de 220 XP; la inactividad disminuye los puntos.",
       f1_title: "XP diario bruto", f1_v1: "minuti_attivi – minutos de actividad moderada/intensa del día (ActivityMonitor)", f1_v2: "passi – conteo de pasos acumulativo del día", f1_v3: "Bono VO₂max (opcional, si está habilitado en la configuración): (vo2max − 30) × 3 si vo2max > 30", f1_v4: "Límite diario: 220 XP — los días de súper entrenamiento no saltan etapas",
       f2_title: "Umbrales de evolución", f2_v1: "Etapa 1 → XP ≥ 300 | Etapa 2 → XP ≥ 1200", f2_v2: "Etapa 0 → 1: ~2–3 semanas de entrenamiento regular (30 min/día)", f2_v3: "Devolución: día perezoso (< 20 XP) = −90 XP acumulados", f2_v4: "Días saltados (cara no mostrada): −90 XP/día, máximo 5 días consecutivos",
@@ -1185,7 +1142,7 @@
       toc_7: "Notes · compatibility",
       sec7_title: "⚠️ Notes · device compatibility",
       note1: "<strong>Data unavailable → default.</strong> If a device does not expose Body Battery, the creature always shows the Active state (mood 2). The same applies to every other service (stress, weather, VO₂max, recovery, sleep, etc.): if we can fetch them from Garmin we use them, otherwise we fall back to a default value or hide the field. This all depends on the devices and which features they support natively: the same code runs on a high-end Fenix and a basic Instinct, adapting to what the watch can measure.",
-      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo does not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
+      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo may not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
       footer: "Kibo · Connect IQ Watch Face · Referencia de Diseño"
     },
     fr: {
@@ -1198,8 +1155,6 @@
       sec2_title: "🌱 Tableau des évolutions", sec2_desc: "Chaque famille a 3 stades évolutifs (0 → 1 → 2). L'évolution est guidée par l'XP cumulé ; la régression se produit si l'XP tombe en dessous du seuil pour inactivité.",
       tbl2_th1: "Famille", tbl2_th2: "Type", tbl2_th3: "Stade 0 – Base", tbl2_th4: "Stade 1 – Intermédiaire", tbl2_th5: "Stade 2 – Final", tbl2_th6: "Accent visuel",
       t_fire: "🔥 Flamme", t_horns1: "(+ cornes de bélier)", t_crest1: "(+ crête de feu)", t_accent1: "Queue de feu, crête animée", t_water: "💧 Nageoires", t_fin1: "(+ nageoire dorsale)", t_gills1: "(+ branchies + nageoires pectorales)", t_accent2: "Nageoire dorsale, queue de requin", t_grass: "🍃 Feuille", t_leaf1: "(+ oreilles de feuille)", t_flower1: "(+ fleur épanouie)", t_accent3: "Gemme sur la tête, pétales", t_elec: "⚡ Éclair", t_light1: "(+ oreilles d'éclair)", t_spark1: "(+ étincelles aux joues)", t_accent4: "Queue d'éclair, étincelles animées", t_ice: "🧊 Cristal", t_cryst1: "(+ 2 cornes de cristal)", t_crown1: "(+ couronne centrale + éclats dorsaux)", t_accent5: "Éclats de glace, cristaux", t_air: "🌬 Ailes", t_wings1: "(+ petites ailes)", t_wings2: "(+ grandes ailes + auréole)", t_accent6: "Nuage sous les pieds, auréole", t_ground: "🪨 Épis", t_deer1: "(+ bois de cerf + gemme sur le front)", t_rock1: "(+ plaques rocheuses dorsales)", t_accent7: "Sourcil épais, cornes ramifiées", t_star: "⭐ Étoiles", t_star1: "(+ antennes en étoile)", t_halo1: "(+ auréole + étoiles en orbite)", t_accent8: "Étoiles en orbite, auréole dorée",
-      tbl3_title: "Changement visuel par stade", tbl3_th1: "Stade", tbl3_th2: "Taille corps", tbl3_th3: "Couleur corps", tbl3_th4: "Couleur ventre", tbl3_th5: "Marques évolutives",
-      st_b: "0 – Base", st_b_n: "Aucun", st_i: "1 – Intermédiaire", st_i_n: "2 points d'accent sur les flancs", st_f: "2 – Final", st_f_n: "2 points sur les flancs + 3 points sur le ventre",
       sec3_title: "📈 Formule XP pour évolution", sec3_desc: "L'XP est la mesure de l'effort physique quotidien. Chaque jour contribue jusqu'à un maximum de 220 XP ; l'inactivité fait baisser les points.",
       f1_title: "XP quotidien brut", f1_v1: "minuti_attivi – minutes d'activité modérée/intense du jour (ActivityMonitor)", f1_v2: "passi – nombre de pas cumulé du jour", f1_v3: "Bonus VO₂max (optionnel, si activé dans les paramètres) : (vo2max − 30) × 3 si vo2max > 30", f1_v4: "Plafond quotidien : 220 XP — les jours de super-entraînement ne sautent pas de stades",
       f2_title: "Seuils d'évolution", f2_v1: "Stade 1 → XP ≥ 300 | Stade 2 → XP ≥ 1200", f2_v2: "Stade 0 → 1: ~2–3 semaines d'entraînement régulier (30 min/jour)", f2_v3: "Régression : journée paresseuse (< 20 XP) = −90 XP cumulés", f2_v4: "Jours sautés (cadran non affiché) : −90 XP/jour, maximum 5 jours consécutifs",
@@ -1251,7 +1206,7 @@
       toc_7: "Notes · compatibility",
       sec7_title: "⚠️ Notes · device compatibility",
       note1: "<strong>Data unavailable → default.</strong> If a device does not expose Body Battery, the creature always shows the Active state (mood 2). The same applies to every other service (stress, weather, VO₂max, recovery, sleep, etc.): if we can fetch them from Garmin we use them, otherwise we fall back to a default value or hide the field. This all depends on the devices and which features they support natively: the same code runs on a high-end Fenix and a basic Instinct, adapting to what the watch can measure.",
-      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo does not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
+      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo may not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
       footer: "Kibo · Connect IQ Watch Face · Référence de Design"
     },
     de: {
@@ -1264,8 +1219,6 @@
       sec2_title: "🌱 Evolutionstabelle", sec2_desc: "Jede Familie hat 3 Evolutionsstufen (0 → 1 → 2). Die Evolution wird durch die kumulierten XP gesteuert; eine Devolution findet statt, wenn die XP aufgrund von Inaktivität unter den Schwellenwert fallen.",
       tbl2_th1: "Familie", tbl2_th2: "Typ", tbl2_th3: "Stufe 0 – Basis", tbl2_th4: "Stufe 1 – Zwischenstufe", tbl2_th5: "Stufe 2 – Finale", tbl2_th6: "Visueller Akzent",
       t_fire: "🔥 Flamme", t_horns1: "(+ Widderhörner)", t_crest1: "(+ Flammenkamm)", t_accent1: "Flammenschwanz, animierter Kamm", t_water: "💧 Flossen", t_fin1: "(+ Rückenflosse)", t_gills1: "(+ Kiemen + Brustflossen)", t_accent2: "Rückenflosse, Haifischschwanz", t_grass: "🍃 Blatt", t_leaf1: "(+ Blattohren)", t_flower1: "(+ aufgeblühte Blume)", t_accent3: "Kopfjuwel, Blütenblätter", t_elec: "⚡ Blitz", t_light1: "(+ Blitzohren)", t_spark1: "(+ Wangenfunken)", t_accent4: "Blitzschwanz, animierte Funken", t_ice: "🧊 Kristall", t_cryst1: "(+ 2 Kristallhörner)", t_crown1: "(+ zentrale Krone + Rückensplitter)", t_accent5: "Eissplitter, Kristalle", t_air: "🌬 Flügel", t_wings1: "(+ kleine Flügel)", t_wings2: "(+ große Flügel + Heiligenschein)", t_accent6: "Wolke unter den Füßen, Heiligenschein", t_ground: "🪨 Ähren", t_deer1: "(+ Hirschgeweih + Stirnjuwel)", t_rock1: "(+ dorsale Felsplatten)", t_accent7: "Dicke Augenbraue, verzweigte Hörner", t_star: "⭐ Sterne", t_star1: "(+ Antennenstern)", t_halo1: "(+ Heiligenschein + umlaufende Sterne)", t_accent8: "Umlaufende Sterne, goldener Heiligenschein",
-      tbl3_title: "Visuelle Änderung pro Stufe", tbl3_th1: "Stufe", tbl3_th2: "Körperskalierung", tbl3_th3: "Körperfarbe", tbl3_th4: "Bauchfarbe", tbl3_th5: "Evolutionszeichen",
-      st_b: "0 – Basis", st_b_n: "Keine", st_i: "1 – Zwischenstufe", st_i_n: "2 Akzentpunkte auf den Hüften", st_f: "2 – Finale", st_f_n: "2 Hüftpunkte + 3 Bauchpunkte",
       sec3_title: "📈 XP-Formel für Evolution", sec3_desc: "Die XP sind das Maß für den täglichen körperlichen Einsatz. Jeder Tag trägt bis zu einem Maximum von 220 XP bei; Inaktivität führt zu Punkteverfall.",
       f1_title: "Brutto-Tages-XP", f1_v1: "minuti_attivi – Minuten mit moderater/intensiver Aktivität des Tages (ActivityMonitor)", f1_v2: "passi – kumulierte Schrittzählung des Tages", f1_v3: "VO₂max-Bonus (optional, falls in den Einstellungen aktiviert): (vo2max − 30) × 3 wenn vo2max > 30", f1_v4: "Tageslimit: 220 XP — Super-Trainingstage überspringen keine Stufen",
       f2_title: "Evolutionsschwellen", f2_v1: "Stufe 1 → XP ≥ 300 | Stufe 2 → XP ≥ 1200", f2_v2: "Stufe 0 → 1: ~2–3 Wochen regelmäßiges Training (30 Min./Tag)", f2_v3: "Devolution: fauler Tag (< 20 XP) = −90 kumulierte XP", f2_v4: "Übersprungene Tage (Zifferblatt nicht angezeigt): −90 XP/Tag, maximal 5 aufeinanderfolgende Tage",
@@ -1317,7 +1270,7 @@
       toc_7: "Notes · compatibility",
       sec7_title: "⚠️ Notes · device compatibility",
       note1: "<strong>Data unavailable → default.</strong> If a device does not expose Body Battery, the creature always shows the Active state (mood 2). The same applies to every other service (stress, weather, VO₂max, recovery, sleep, etc.): if we can fetch them from Garmin we use them, otherwise we fall back to a default value or hide the field. This all depends on the devices and which features they support natively: the same code runs on a high-end Fenix and a basic Instinct, adapting to what the watch can measure.",
-      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo does not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
+      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo may not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
       footer: "Kibo · Connect IQ Watch Face · Design-Referenz"
     },
     ja: {
@@ -1330,8 +1283,6 @@
       sec2_title: "🌱 進化マトリクス表", sec2_desc: "各系統には3つの進化段階（0 → 1 → 2）があります。進化は累積XPによって変化し、不活動によりXPが閾値を下回ると退化が起こります。",
       tbl2_th1: "系統", tbl2_th2: "属性", tbl2_th3: "段階 0 – ベース", tbl2_th4: "段階 1 – 中期", tbl2_th5: "段階 2 – 最終", tbl2_th6: "視覚的特徴",
       t_fire: "🔥 火炎", t_horns1: "（＋牡羊の角）", t_crest1: "（＋炎のたてがみ）", t_accent1: "炎の尾、アニメーションするたてがみ", t_water: "💧 水流", t_fin1: "（＋背びれ）", t_gills1: "（＋エラ＋胸びれ）", t_accent2: "背びれ、サメの尾", t_grass: "🍃 若葉", t_leaf1: "（＋葉の耳）", t_flower1: "（＋開いた花）", t_accent3: "頭の宝石、花びら", t_elec: "⚡ 雷電", t_light1: "（＋稲妻の耳）", t_spark1: "（＋頬の火花）", t_accent4: "稲妻の尾、アニメーションする火花", t_ice: "🧊 氷晶", t_cryst1: "（＋2本の氷晶の角）", t_crown1: "（＋中央の冠＋背面の氷片）", t_accent5: "氷の破片、クリスタル", t_air: "🌬 疾風", t_wings1: "（＋小さな翼）", t_wings2: "（＋大きな翼＋光輪）", t_accent6: "足元の雲、光輪", t_ground: "🪨 岩石", t_deer1: "（＋鹿の角＋額の宝石）", t_rock1: "（＋背面の岩板）", t_accent7: "太い眉、分かれた角", t_star: "⭐ 星座", t_star1: "（＋星のアンテナ）", t_halo1: "（＋光輪＋軌道星）", t_accent8: "軌道上の星、金色の光輪",
-      tbl3_title: "段階ごとのビジュアル変化", tbl3_th1: "段階", tbl3_th2: "体サイズ", tbl3_th3: "体の色", tbl3_th4: "お腹の色", tbl3_th5: "進化の印",
-      st_b: "0 – ベース", st_b_n: "なし", st_i: "1 – 中期", st_i_n: "腰に2つのアクセントドット", st_f: "2 – 最終", st_f_n: "腰に2ドット＋お腹に3ドット",
       sec3_title: "📈 進化のためのXP計算式", sec3_desc: "XPは日々の運動量の指標です。1日最大220 XPまで獲得可能ですが、活動しない日が続くとポイントが減少します。",
       f1_title: "1日の総獲得XP", f1_v1: "minuti_attivi – 1日の中強度・高強度の活動時間（分）（ActivityMonitor）", f1_v2: "passi – 1日の累積歩数", f1_v3: "VO₂maxボーナス（オプション、設定で有効な場合）：vo2max > 30 の場合、(vo2max − 30) × 3", f1_v4: "1日上限：220 XP — 非常に激しいトレーニングを行った日でも段階をスキップすることはありません",
       f2_title: "進化の閾値", f2_v1: "段階 1 → XP ≥ 300 | 段階 2 → XP ≥ 1200", f2_v2: "段階 0 → 1: 約2〜3週間の定期的なトレーニング（30分/日）", f2_v3: "退化: 運動不足の日（< 20 XP） = 累積XPから −90 XP", f2_v4: "スキップされた日数（ウォッチフェイスが表示されなかった日）: −90 XP/日、最大5連続日まで",
@@ -1383,7 +1334,7 @@
       toc_7: "Notes · compatibility",
       sec7_title: "⚠️ Notes · device compatibility",
       note1: "<strong>Data unavailable → default.</strong> If a device does not expose Body Battery, the creature always shows the Active state (mood 2). The same applies to every other service (stress, weather, VO₂max, recovery, sleep, etc.): if we can fetch them from Garmin we use them, otherwise we fall back to a default value or hide the field. This all depends on the devices and which features they support natively: the same code runs on a high-end Fenix and a basic Instinct, adapting to what the watch can measure.",
-      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo does not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
+      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo may not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
       footer: "Kibo · Connect IQ Watch Face · デザイン仕様書"
     },
     zh: {
@@ -1396,8 +1347,6 @@
       sec2_title: "🌱 进化矩阵分支表", sec2_desc: "每个属性家族均严格划分3个进化阶段（0阶 → 1阶 → 2阶）。宠物的成长和蜕变完全依赖累计XP经验值的盈亏，若因长期缺乏运动导致经验值跌破安全线，将会执行退化规则。",
       tbl2_th1: "家族", tbl2_th2: "属性类型", tbl2_th3: "0阶 – 基础形态", tbl2_th4: "1阶 – 中期变异", tbl2_th5: "2阶 – 终极形态", tbl2_th6: "特有全局图像资源",
       t_fire: "🔥 火焰分支", t_horns1: "（+ 盘旋大羊角）", t_crest1: "（+ 动态燃烧背鳍）", t_accent1: "尾部火焰粒子、火焰背鳍动画", t_water: "💧 水流分支", t_fin1: "（+ 鲨鱼脊鳍）", t_gills1: "（+ 侧边鳃裂 + 宽大胸鳍）", t_accent2: "高耸背鳍、海洋流线型尾部", t_grass: "🍃 绿植分支", t_leaf1: "（+ 树叶状耳朵）", t_flower1: "（+ 盛开的向日葵）", t_accent3: "头顶发光晶核、飘落花瓣", t_elec: "⚡ 雷电分支", t_light1: "（+ 折线闪电耳）", t_spark1: "（+ 脸颊闪电斑纹）", t_accent4: "闪电分叉尾、高频电火花", t_ice: "🧊 冰霜分支", t_cryst1: "（+ 对称双晶状角）", t_crown1: "（+ 核心冰晶冰冕 + 沿脊柱冰晶碎屑）", t_accent5: "悬浮冰晶碎片、晶体反光层", t_air: "🌬 气流分支", t_wings1: "（+ 背部微型翅膀）", t_wings2: "（+ 宽展大羽翼 + 环形天使天环）", t_accent6: "底部悬浮云雾托盘、头部发光天环", t_ground: "🪨 岩石分支", t_deer1: "（+ 鹿角状分叉 + 额头核心宝石）", t_rock1: "（+ 全包裹悬浮岩石甲片）", t_accent7: "粗犷坚硬岩石眉、分叉角状外骨骼", t_star: "⭐ 星宿分支", t_star1: "（+ 环绕式星体触角）", t_halo1: "（+ 日冕金环 + 独立星体轨道）", t_accent8: "自转黄道轨道、外围自发光星系",
-      tbl3_title: "形态跨度参数映射", tbl3_th1: "阶段", tbl3_th2: "全局缩放比例", tbl3_th3: "身体主色", tbl3_th4: "腹部配色", tbl3_th5: "迭代物理标志",
-      st_b: "0 – 基础形态", st_b_n: "无任何额外部件", st_i: "1 – 中期形态", st_i_n: "左右躯干两侧分别生成2枚发光能量点", st_f: "2 – 终极形态", st_f_n: "躯干两侧2枚能量点 + 腹部区域增生3枚发光矩阵点",
       sec3_title: "📈 进化经验值计算公式", sec3_desc: "XP经验值作为衡量用户每日真实运动量的核心数据。每日获取上限硬性锁死为 220 XP，单日过渡训练不会导致宠物暴走式连跳，旨在引导规律性健身。",
       f1_title: "单日总获取XP计算法则", f1_v1: "minuti_attivi – 用户当日产生的中高强度有效运动总分钟数（调取底层 ActivityMonitor 模块）", f1_v2: "passi – 当日步行计数器累计总步数", f1_v3: "VO₂max 最大摄氧量奖赏（可选，需在高级控制台开启）：当 vo2max > 30 时，额外斩获 (vo2max − 30) × 3 经验加成", f1_v4: "日加总上限：220 XP — 即使单日进行极限铁人三项训练，溢出部分亦直接熔断，无法带入次日",
       f2_title: "阶梯解锁经验阈值线", f2_v1: "1阶门槛 → XP ≥ 300 | 2阶门槛 → XP ≥ 1200", f2_v2: "由0阶升至1阶：需保持约 2~3 周的规律性训练（推荐指标为单日满30分钟活动）", f2_v3: "触发退化惩罚：若单日结算总XP未达到 20 XP（被系统定义为极度懈怠日），则累积XP直接强制扣减 90 XP", f2_v4: "未佩戴滑落：若长达数日未进入表盘视图，系统将以 −90 XP/天 持续折损，连续惩罚最多挂钩 5 天",
@@ -1449,7 +1398,7 @@
       toc_7: "Notes · compatibility",
       sec7_title: "⚠️ Notes · device compatibility",
       note1: "<strong>Data unavailable → default.</strong> If a device does not expose Body Battery, the creature always shows the Active state (mood 2). The same applies to every other service (stress, weather, VO₂max, recovery, sleep, etc.): if we can fetch them from Garmin we use them, otherwise we fall back to a default value or hide the field. This all depends on the devices and which features they support natively: the same code runs on a high-end Fenix and a basic Instinct, adapting to what the watch can measure.",
-      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo does not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
+      note2: "<strong>Active calories ≠ Garmin's.</strong> The active-calories value shown by Kibo may not match the one displayed in the Garmin app/widget, because ours is a custom formula (total calories − Mifflin-St Jeor BMR over elapsed time, with fallback). The calculation details are those described in the 'Active Calories Formula' section above.",
       footer: "Kibo · Garmin Connect IQ 表盘开发团队 · 核心架构设计参考手册"
     }
   };
