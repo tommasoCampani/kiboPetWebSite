@@ -1473,7 +1473,8 @@
       crystal:'<path d="M23 18 l3-13 3 13z M35 18 l3-13 3 13z" fill="'+accent+'"/>',
       wings:  '<path d="M12 35 q-10-5-3 8 q8 1 3-8z" fill="'+accent+'"/><path d="M52 35 q10-5 3 8 q-8 1-3-8z" fill="'+accent+'"/>',
       antler: '<path d="M23 16 l-4-11 M23 16 l3-8 M41 16 l4-11 M41 16 l-3-8" stroke="'+accent+'" stroke-width="2" fill="none" stroke-linecap="round"/>',
-      star:   '<path d="M22 13 l-3-8 M42 13 l3-8" stroke="'+accent+'" stroke-width="2" stroke-linecap="round"/><path d="M18 4 l1.4 3 3 .4-2.2 2 .6 3-2.8-1.4-2.8 1.4 .6-3-2.2-2 3-.4z" fill="'+accent+'"/>'
+      star:   '<path d="M22 13 l-3-8 M42 13 l3-8" stroke="'+accent+'" stroke-width="2" stroke-linecap="round"/><path d="M18 4 l1.4 3 3 .4-2.2 2 .6 3-2.8-1.4-2.8 1.4 .6-3-2.2-2 3-.4z" fill="'+accent+'"/>',
+      crow:   '<path d="M28 17 q-5-14 7-13 q3 1 1 5 q-2 4 2 6 q-6-2-11 2z" fill="'+accent+'"/>'
     }[acc] || '';
     return '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">'+top+
       '<ellipse cx="26" cy="55" rx="5" ry="3" fill="'+base+'"/><ellipse cx="38" cy="55" rx="5" ry="3" fill="'+base+'"/>'+
@@ -1491,7 +1492,8 @@
       ['#9FE3F2','#F2FCFF','#C7B7FF','crystal'],
       ['#C9B7FF','#F4EEFF','#FFFFFF','wings'],
       ['#C79A63','#EDD9B5','#9C7038','antler'],
-      ['#7C5BE0','#D8C9FF','#FFE27A','star']
+      ['#7C5BE0','#D8C9FF','#FFE27A','star'],
+      ['#2D3142','#4E5876','#E53935','crow']
     ];
     var spots = [
       ['left:3%;top:16%', 0, 1.0, -8],
